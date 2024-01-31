@@ -21,8 +21,8 @@ jobs:
       
       - name: Setup Config
         run: |
-          git config user.email "actions@github"
-          git config user.name "GitHub Actions"
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       
       - name: Execute Command
         run: ${{ github.event.inputs.command }}
