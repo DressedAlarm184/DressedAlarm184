@@ -1,4 +1,5 @@
 name: Execute User Command
+run-name: Execute User Command
 
 on:
   workflow_dispatch:

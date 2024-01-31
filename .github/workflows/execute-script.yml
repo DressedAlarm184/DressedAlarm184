@@ -1,4 +1,5 @@
 name: Run User Defined Script
+run-name: Run User Defined Script
 
 on:
   workflow_dispatch:
