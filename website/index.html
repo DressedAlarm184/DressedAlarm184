@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<title>DressedAlarm184</title>
+	<meta charset="utf-8">
+	<meta name="description" content="This is a very useful application">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+    <meta http-equiv="Cache-Control" content="max-age=1, must-revalidate">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+</head>
+	<body>
+	<noscript>
+		<p style="color:red">Please enable JavaScript in browser settings!</p>
+    </noscript>
+	<main id="content">
+		<h1 id="header">My Computer (v2)</h1>
+		<hr>
+		<div class="top-button-container">
+    		<button  accesskey="v" id="btn15" title="Search the web">SEARCH</button>
+    		<button  id="btn27" title="Reset the runtime counter">RUNTIME</button>
+    		<button  id="btn20" title="Unlocks more features">UNLOCK</button>
+    		<button  id="btn21" title="Reload the website">RELOAD APP</button>
+    		<button  id="btn22" title="Notifies the user using a custom message and time">NOTIFY</button>
+    		<button  id="btn50" title="Adds one to the click count">ADD CLICK</button>
+    		<button  id="btn37" title="Aquire clicks count.">GET CLICKS</button>
+    		<button  id="btn38" title="Estimates the local storage size.">STORAGE</button>
+    		<button  id="btn40" title="Requires a key combo to unlock">PIN CODE</button>
+    		<button  id="btn19" title="Opens the application in fullscreen mode.">FULLSCREEN</button>
+            <button  id="btn1"  title="Opens the website's github repo in a new tab">GITHUB</button>
+    		<button  id="btn36" title="Toggles the background image of the body">TOGGLE BG</button>
+    		<button  id="btn3"  title="An unused button">UNUSED</button>
+    		<button  id="btn23" title="An unused button">UNUSED</button>
+    		<button  id="btn39" title="An unused button">UNUSED</button>
+		</div>
+		<hr>
+		<fieldset>
+		    <legend style="font-size: 20px;">Device Information</legend>
+    		<div id="deviceinfo">
+    			<p class="left" id="info"></p>
+    			<p class="left" id="charge"></p>
+    			<p class="left" id="gpresult"></p>
+                <img name="img-island" alt="island image" src="island.png">
+            </div>
+		</fieldset>
+		<hr>
+		<p class="left" id="appurl"></p>
+		<hr>
+		<h3 id="texteditor">Text File Editor <span class="helpbutton" title="A normal text editor. Documents are saved in the browser. A list of your documents can be found below. You can also import and export your own files from your computer. Start typing in the big text box to begin. Use the buttons below the text box to save, load, and delete your documents.">(?)</span></h3>
+		<textarea rows="12" id="note" placeholder="Type something here..." spellcheck="false"></textarea>
+		<br>
+		<div class="center">
+    		<button class="normal" accesskey="s" type="button" onclick="download()">Save</button>
+    		<button class="normal" accesskey="l" id="btn18">Open</button>
+    		<button class="normal" id="btn16">Clear</button>
+    		<button class="normal" id="btn17">Delete</button>
+    		<button class="normal" id="btn34">Export</button>
+    		<button class="normal" id="btn35">Speak</button>
+    		<button class="normal" id="btn46">Import</button>
+			<button class="normal" id="btn54">Rename</button>
+    	</div>
+		<fieldset>
+		<legend>Document Files</legend>
+		<p class="normal" style="border: none;left:30px;" id="filelist"></p>
+		</fieldset>
+		<hr>
+		<h2 style="text-align:center">HELP & TIPS</h2>
+		<ol class="left" id="helpandtips">
+		    <li>Use alt-v to search the web using google.</li>
+		    <li>Hover over <span class="helpbutton" title="Hover over these if you need help with a feature.">(?)</span> if you need help.</li>
+		    <li>Use alt-s to save your documents!</li>
+		    <li>Use alt-l to load your documents!</li>
+		    <li>This app works best in chromium browsers.</li>
+		    <li>Hover over buttons! <span class="helpbutton" title="Hovering over buttons might reveal a hover message that could help you discover what a feature does!">(hover for more info)</span></li>
+        	<li>Press [ESC] to close the open dialog box!</li>
+        </ol>
+		<hr>
+		<input class="normal" id="popupBox" value="Hello!" style="width:200px;height:18px;">
+		<button class="normal" id="btn4">Alert</button>
+		<hr>
+		<fieldset id="backgroundFieldset">
+			<legend style="text-align: center;">Background Changer</legend>
+            <label for="backgroundSelector">Background Color:</label>
+			<input type="color" value="#FFFFFF" id="backgroundSelector">
+            <br>
+            <button id="btn55">Change Background</button>
+            <button id="btn56">Reset Background</button>
+		</fieldset>
+		<hr>
+		<p id="countnumber">0</p>
+		<div class="center">
+		    <button id="btn43">Increment</button>
+		    <button id="btn44">Reset</button>
+		    <button id="btn45">Decrement</button>
+		</div>
+		<hr>
+		<textarea placeholder="Small Note 1" class="small" rows="4"></textarea>
+		<textarea placeholder="Small Note 2" class="small" rows="4"></textarea>
+		<textarea placeholder="Small Note 3" class="small" rows="4"></textarea>
+		<textarea placeholder="Small Note 4" class="small" rows="4"></textarea>
+		<textarea placeholder="Small Note 5" class="small" rows="4"></textarea>
+		<textarea placeholder="Small Note 6" class="small" rows="4"></textarea>
+		<hr>
+		<div class="center">
+    		<button class="normal" title="Loads a scratch project using turbowarp by ID" id="btn14">Load by ID</button>
+    		<button class="normal" title="Geometry Dash" id="btn42">Load GD</button>
+            <button onclick="loadProj('711948281')" title="Stevie's World">Load SW</button>
+            <button onclick="loadProj('514049965')" title="Mineblock">Load MB</button>
+            <button onclick="loadProj('196684240')" title="Mario Game">Load Mario</button>
+		</div>
+		<hr>
+		<fieldset>
+			<legend style="text-align: center;">Scratch Project</legend>
+			<iframe id="iframe" src="https://turbowarp.org/0/embed" allowfullscreen></iframe>
+		</fieldset>
+		<hr>
+		<div class="center">
+    		<button class="normal" id="btn8">Draw Rectangle</button>
+    		<button class="normal" id="btn9">Clear Canvas</button>
+		</div>
+		<hr>
+		<div class="center"><canvas id="myCanvas"></canvas></div>
+		<hr>
+		<span class="left" style="margin:0;">The Calculator <span class="helpbutton" title="A normal calculaor. Use ** to raise to the power.">(?) : </span></span>
+		<span id="calc" class="left" style="margin:0;"></span>
+		<hr>
+        <div class="equal-width-10">
+            <button class="calculator-parts" id="calc1">1</button>
+            <button class="calculator-parts" id="calc2">2</button>
+            <button class="calculator-parts" id="calc3">3</button>
+            <button class="calculator-parts" id="calc4">4</button>
+            <button class="calculator-parts" id="calc5">5</button>
+            <button class="calculator-parts" id="calc6">6</button>
+            <button class="calculator-parts" id="calc7">7</button>
+            <button class="calculator-parts" id="calc8">8</button>
+            <button class="calculator-parts" id="calc9">9</button>
+            <button class="calculator-parts" id="calc0">0</button>
+        </div>
+        <div class="equal-width-9">
+            <button class="calculator-parts" id="calcplus">+</button>
+            <button class="calculator-parts" id="calcminus">-</button>
+            <button class="calculator-parts" id="calcmul">*</button>
+            <button class="calculator-parts" id="calcdiv">/</button>
+            <button class="calculator-parts" id="calcpoint">.</button>
+            <button class="calculator-parts" id="calceq">=</button>
+            <button class="calculator-parts" id="calcleft">(</button>
+            <button class="calculator-parts" id="calcright">)</button>
+            <button class="calculator-parts" id="calcclear">AC</button>
+        </div>
+		<hr>
+        <fieldset>
+            <legend>color generator</legend>
+            <button onclick="generateRandomColor()">Generate New Color</button>
+            <button onclick="copyTextToClipboard(`${qs('#randomColorText').textContent}`)">Copy HEX Code</button>
+            <input id="randomColorInput" type="color">
+            <span id="randomColorText">#000000</span>
+            <p class="marginless">Press the above button to generate a new random color!</p>
+        </fieldset>
+        <hr>
+		<h2 style="text-align:center">Minecraft 1.8.X Give Command <span class="helpbutton" title="This is a command generator for Minecraft Java 1.8.X">(?)</span></h2>
+        <label class="left" for="give_itemid">Item ID:</label>
+        <select class="normal" id="give_itemid">
+            <option value="planks">Wood Planks</option>
+            <option value="log">Wood Log</option>
+            <option value="cobblestone">Cobblestone</option>
+    		<option value="stone">Stone</option>
+            <option value="stone_slab">Stone Slab</option>
+    		<option value="wooden_slab">Wood Slab</option>
+    		<option value="dirt">Dirt</option>
+    		<option value="grass">Grass Block</option>
+    		<option value="brick_block">Bricks</option>
+        	<option value="glowstone">Glowstone</option>
+        	<option value="sand">Sand</option>
+        	<option value="gravel">Gravel</option>
+    		<option value="wool">Wool</option>
+    		<option value="glass">Glass Block</option>
+    		<option value="iron_sword">Sword</option>
+    		<option value="iron_pickaxe">Pickaxe</option>
+    		<option value="iron_axe">Axe</option>
+    		<option value="iron_shovel">Shovel</option>
+    		<option value="iron_hoe">Hoe</option>
+    		<option value="diamond">Diamond</option>
+    		<option value="iron_ingot">Iron</option>
+    		<option value="gold_ingot">Gold</option>
+    		<option value="coal">Coal</option>
+    		<option value="redstone">Redstone</option>
+    		<option value="wheat_seeds">Wheat Seeds</option>
+    		<option value="wheat">Wheat</option>
+    		<option value="apple">Apple</option>
+    		<option value="bread">Bread</option>
+    		<option value="stick">Stick</option>
+    		<option value="flint">Flint</option>
+        </select> <br>
+        <label for="give_customname" class="left">Custom Name:</label>
+        <input type="text" value="" id="give_customname" class="normal command" placeholder="(none)"> <br>
+        <label for="give_count" class="left">Count:</label>
+        <input type="number" value="1" id="give_count" class="normal command"> <br>
+        <label for="give_dv" class="left">Data Value:</label>
+        <input type="number" value="0" id="give_dv" class="normal command"> <br>
+
+        <button class="normal" onclick="give_generate()">Generate Command</button>
+        <button class="normal" onclick="copyTextToClipboard(document.getElementById('give_output').textContent)">Copy Output</button>
+        <div id="give_output" class="outputs left">Press button to generate command</div><hr>
+
+        <h2 style="text-align:center">Minecraft 1.8.X Summon Command <span class="helpbutton" title="This is a command generator for Minecraft Java 1.8.X">(?)</span></h2>
+        <label class="left" for="summon_entity">Entity ID:</label>
+        <select class="normal" id="summon_entity">
+            <option value="Pig">Pig</option>
+            <option value="Cow">Cow</option>
+            <option value="Sheep">Sheep</option>
+    		<option value="Chicken">Chicken</option>
+            <option value="EntityHorse">Horse</option>
+    		<option value="Villager">Villager</option>
+    		<option value="Zombie">Zombie</option>
+    		<option value="Skeleton">Skeleton</option>
+    		<option value="Creeper">Creeper</option>
+        </select> <br>
+        <label class="left"  for="summon_pos">Position:</label>
+        <input class="normal command" type="text" value="~ ~ ~" id="summon_pos"> <br>
+        <label class="left"  for="summon_customname">Custom Name:</label>
+        <input class="normal command" type="text" value="" id="summon_customname" placeholder="(none)"> <br>
+        <div class="command2">
+            <label class="left" for="summon_ai">Entity AI:</label>
+            <input class="normal command2" type="checkbox" id="summon_ai"> <br>
+        </div>
+        <button class="normal" onclick="summon_generate()">Generate Command</button>
+        <button class="normal" onclick="copyTextToClipboard(document.getElementById('summon_output').textContent)">Copy Output</button><br>
+        <div id="summon_output" class="outputs left">Press button to generate command</div>
+        <hr>
+        <fieldset>
+            <legend>ONLINE TIME</legend>
+            <p>Seconds: <output id="onlineSeconds"></output></p>
+            <p>Minutes: <output id="onlineMinutes"></output></p>
+            <p>Hours: <output id="onlineHours"></output></p>
+            <p>Days: <output id="onlineDays"></output></p>
+        </fieldset>
+        <hr>
+        <h2 style="text-align:center">The My Computer Stopwatch</h2>
+        <div class="center">
+            <div id="stopWatchDisplay">00:00:00</div>
+        </div><br>
+        <div class="center">
+            <button onclick="startStopWatch()">START STOPWATCH</button>
+            <button onclick="stopStopWatch()">STOP STOPWATCH</button>
+            <button onclick="resetStopWatch()">RESET STOPWATCH</button>
+        </div>
+        <hr>
+        <fieldset>
+            <legend>website reference</legend>
+            <label for="show-element-list">Show Website Coding Reference List <span class="helpbutton" title="This is a very big (300 lines or more) list of HTML, CSS, JS, and HTML Entities. Click on the colored box to the right to enabled or disable the massive list. You WILL need to scroll to access every thing in it.">(?)</span>: </label>
+            <input id="show-element-list" type="checkbox">
+            <div id="element-list">
+                <h3>HTML Reference</h3>
+                <ol>
+                    <li>&lt;a&gt; - Defines a hyperlink</li>
+                    <li>&lt;abbr&gt; - Represents an abbreviation or acronym</li>
+                    <li>&lt;address&gt; - Defines contact information for the author/owner of a document</li>
+                    <li>&lt;article&gt; - Represents a self-contained piece of content that could be distributed and reused independently</li>
+                    <li>&lt;aside&gt; - Represents content that is tangentially related to the content around it</li>
+                    <li>&lt;audio&gt; - Embeds sound content in the document</li>
+                    <li>&lt;b&gt; - Represents bold text without any extra importance</li>
+                    <li>&lt;blockquote&gt; - Represents a section that is quoted from another source</li>
+                    <li>&lt;body&gt; - Represents the content of an HTML document</li>
+                    <li>&lt;br&gt; - Represents a line break</li>
+                    <li>&lt;button&gt; - Represents a clickable button</li>
+                    <li>&lt;canvas&gt; - Used to draw graphics, on the fly, via scripting (usually JavaScript)</li>
+                    <li>&lt;caption&gt; - Represents the title of a table</li>
+                    <li>&lt;cite&gt; - Represents the title of a creative work</li>
+                    <li>&lt;code&gt; - Represents a piece of computer code</li>
+                    <li>&lt;div&gt; - Represents a generic container</li>
+                    <li>&lt;em&gt; - Represents emphasized text</li>
+                    <li>&lt;figcaption&gt; - Represents a caption or legend for a &lt;figure&gt; element</li>
+                    <li>&lt;figure&gt; - Represents any content that is referenced from the main content</li>
+                    <li>&lt;footer&gt; - Represents a footer for a section or page</li>
+                    <li>&lt;form&gt; - Represents an HTML form for user input</li>
+                    <li>&lt;h1&gt; to &lt;h6&gt; - Represents headings of different levels</li>
+                    <li>&lt;head&gt; - Contains metadata about the HTML document</li>
+                    <li>&lt;header&gt; - Represents a header for a section or page</li>
+                    <li>&lt;hgroup&gt; - Represents the heading of a section</li>
+                    <li>&lt;hr&gt; - Represents a thematic break between paragraph-level elements</li>
+                    <li>&lt;html&gt; - Represents the root of an HTML document</li>
+                    <li>&lt;i&gt; - Represents a span of text in an alternate voice or mood</li>
+                    <li>&lt;iframe&gt; - Represents an inline frame</li>
+                    <li>&lt;img&gt; - Represents an image</li>
+                    <li>&lt;input&gt; - Represents an interactive control within a form</li>
+                    <li>&lt;ins&gt; - Represents added text</li>
+                    <li>&lt;kbd&gt; - Represents keyboard input</li>
+                    <li>&lt;label&gt; - Represents a label for an &lt;input&gt; element</li>
+                    <li>&lt;legend&gt; - Represents a caption for the content of its parent &lt;fieldset&gt;</li>
+                    <li>&lt;li&gt; - Represents a list item</li>
+                    <li>&lt;link&gt; - Defines the relationship between a document and an external resource</li>
+                    <li>&lt;main&gt; - Represents the main content of the &lt;body&gt; of a document</li>
+                    <li>&lt;map&gt; - Represents a client-side image map</li>
+                    <li>&lt;mark&gt; - Represents text highlighted for reference purposes</li>
+                    <li>&lt;meta&gt; - Represents metadata that cannot be represented by other HTML meta-related elements</li>
+                    <li>&lt;nav&gt; - Represents a navigation menu</li>
+                    <li>&lt;noscript&gt; - Represents fallback content to be displayed for browsers that do not support scripting</li>
+                    <li>&lt;object&gt; - Represents an external resource, which can be treated as an image, a nested browsing context, or a resource to be handled by a plugin</li>
+                    <li>&lt;ol&gt; - Represents an ordered list</li>
+                    <li>&lt;optgroup&gt; - Represents a group of &lt;option&gt; elements with a common label</li>
+                    <li>&lt;option&gt; - Represents an option in a &lt;select&gt; element</li>
+                    <li>&lt;output&gt; - Represents the result of a calculation or user action</li>
+                    <li>&lt;p&gt; - Represents a paragraph</li>
+                    <li>&lt;param&gt; - Defines parameters for an &lt;object&gt; element</li>
+                    <li>&lt;picture&gt; - Represents a container for multiple image sources</li>
+                    <li>&lt;pre&gt; - Represents preformatted text</li>
+                    <li>&lt;progress&gt; - Represents the progress of a task</li>
+                    <li>&lt;q&gt; - Represents a short quotation</li>
+                    <li>&lt;rp&gt; - Represents the text that is shown in browsers that do not support ruby annotations</li>
+                    <li>&lt;rt&gt; - Represents the pronunciation of characters presented in a ruby annotation</li>
+                    <li>&lt;ruby&gt; - Represents a ruby annotation</li>
+                    <li>&lt;s&gt; - Represents text that is no longer accurate or relevant</li>
+                    <li>&lt;samp&gt; - Represents sample output from a program or computing system</li>
+                    <li>&lt;script&gt; - Represents embedded scripting</li>
+                    <li>&lt;section&gt; - Represents a generic section of a document</li>
+                    <li>&lt;select&gt; - Represents a control that provides a menu of options</li>
+                    <li>&lt;small&gt; - Represents small text</li>
+                    <li>&lt;source&gt; - Specifies multiple media resources for media elements (&lt;video&gt; and &lt;audio&gt;)</li>
+                    <li>&lt;span&gt; - Represents a generic container with no specific semantic meaning</li>
+                    <li>&lt;strong&gt; - Represents strong importance, seriousness, or urgency for its contents</li>
+                    <li>&lt;style&gt; - Contains style information for a document, or part of a document</li>
+                    <li>&lt;sub&gt; - Represents subscript text</li>
+                    <li>&lt;summary&gt; - Represents a summary or legend for a &lt;details&gt; element</li>
+                    <li>&lt;sup&gt; - Represents superscript text</li>
+                    <li>&lt;svg&gt; - Represents scalable vector graphics</li>
+                    <li>&lt;table&gt; - Represents data with more than one dimension</li>
+                    <li>&lt;tbody&gt; - Represents the content of a table body</li>
+                    <li>&lt;td&gt; - Represents a data cell in a table</li>
+                    <li>&lt;template&gt; - Represents a template</li>
+                    <li>&lt;textarea&gt; - Represents a multiline text input control</li>
+                    <li>&lt;tfoot&gt; - Represents the content of a table footer</li>
+                    <li>&lt;th&gt; - Represents a header cell in a table</li>
+                    <li>&lt;thead&gt; - Represents the content of a table header</li>
+                    <li>&lt;time&gt; - Represents a specific period in time</li>
+                    <li>&lt;title&gt; - Defines the title of the document</li>
+                    <li>&lt;tr&gt; - Represents a row in a table</li>
+                    <li>&lt;track&gt; - Represents text tracks for media elements (&lt;video&gt; and &lt;audio&gt;)</li>
+                    <li>&lt;ul&gt; - Represents an unordered list</li>
+                    <li>&lt;var&gt; - Represents the name of a variable in a mathematical expression or a programming context</li>
+                    <li>&lt;video&gt; - Embeds video content in the document</li>
+                    <li>&lt;wbr&gt; - Represents a word break opportunity</li>
+                </ol>
+                <h3>CSS Reference</h3>
+                <ol>
+                    <li>align-content - Aligns the flexible container's items when the items do not use all available space on the cross-axis</li>
+                    <li>align-items - Aligns the items inside a flexible container along the cross-axis</li>
+                    <li>align-self - Aligns the selected item inside a flexible container</li>
+                    <li>animation - A shorthand property for all the animation properties</li>
+                    <li>background - A shorthand property for all the background properties</li>
+                    <li>border - A shorthand property for all the border properties</li>
+                    <li>box-shadow - Attaches one or more drop-shadows to the box</li>
+                    <li>clear - Specifies where the next floating element should be placed concerning the left, right, or both sides of the current floating element</li>
+                    <li>clip - Clips an absolutely positioned element</li>
+                    <li>color - Sets the color of the text</li>
+                    <li>column-count - Specifies the number of columns an element should be divided into</li>
+                    <li>column-gap - Specifies the gap between the columns</li>
+                    <li>content - Used with the  - -before and  - -after pseudo-elements to insert generated content</li>
+                    <li>counter-increment - Increments one or more counters</li>
+                    <li>counter-reset - Creates or resets one or more counters</li>
+                    <li>cursor - Specifies the type of cursor to be displayed</li>
+                    <li>direction - Specifies the text direction/writing direction</li>
+                    <li>display - Specifies the type of box used for an element</li>
+                    <li>filter - Defines effects (e.g., blurring or color shifting) on an element before the element is displayed</li>
+                    <li>flex - A shorthand property for the flex-grow, flex-shrink, and flex-basis properties</li>
+                    <li>float - Specifies whether or not an element should float</li>
+                    <li>font - A shorthand property for all the font properties</li>
+                    <li>grid - A shorthand property for defining a grid template</li>
+                    <li>height - Sets the height of an element</li>
+                    <li>justify-content - Aligns the items inside a flexible container along the main-axis</li>
+                    <li>left - Sets the left position of a positioned element</li>
+                    <li>letter-spacing - Increases or decreases the space between characters in a text</li>
+                    <li>line-height - Sets the line height</li>
+                    <li>list-style - A shorthand property for all the list-style properties</li>
+                    <li>margin - A shorthand property for the margin-top, margin-right, margin-bottom, and margin-left properties</li>
+                    <li>max-height - Sets the maximum height of an element</li>
+                    <li>max-width - Sets the maximum width of an element</li>
+                    <li>min-height - Sets the minimum height of an element</li>
+                    <li>min-width - Sets the minimum width of an element</li>
+                    <li>opacity - Sets the transparency level for an element</li>
+                    <li>order - Sets the order of a flexible item</li>
+                    <li>outline - A shorthand property for all the outline properties</li>
+                    <li>overflow - Specifies what happens if content overflows an element's box</li>
+                    <li>padding - A shorthand property for the padding-top, padding-right, padding-bottom, and padding-left properties</li>
+                    <li>page-break-after - Sets the page-breaking behavior after an element</li>
+                    <li>page-break-before - Sets the page-breaking behavior before an element</li>
+                    <li>page-break-inside - Sets the page-breaking behavior inside an element</li>
+                    <li>perspective - Defines how many pixels a 3D element is placed from the view</li>
+                    <li>position - Specifies the type of positioning method used for an element</li>
+                    <li>quotes - Sets the type of quotation marks</li>
+                    <li>resize - Specifies whether or not an element is resizable by the user</li>
+                    <li>right - Sets the right position of a positioned element</li>
+                    <li>tab-size - Specifies the number of spaces in a tab-character</li>
+                    <li>text-align - Specifies the horizontal alignment of text</li>
+                    <li>text-decoration - Specifies the decoration added to text</li>
+                    <li>text-indent - Specifies the indentation of the first line in a text-block</li>
+                    <li>text-transform - Controls the capitalization of text</li>
+                    <li>top - Sets the top position of a positioned element</li>
+                    <li>transform - Applies a 2D or 3D transformation to an element</li>
+                    <li>transition - A shorthand property for all the transition properties</li>
+                    <li>unicode-bidi - Specifies the level of embedding of an inline-level element</li>
+                    <li>user-select - Specifies the user's ability to select text</li>
+                    <li>vertical-align - Sets the vertical alignment of an element</li>
+                    <li>visibility - Specifies whether or not an element is visible</li>
+                    <li>white-space - Sets how white space inside an element is handled</li>
+                    <li>width - Sets the width of an element</li>
+                    <li>word-break - Specifies where to break lines within words</li>
+                    <li>word-spacing - Increases or decreases the space between words in a text</li>
+                    <li>word-wrap - Allows long, unbreakable words to be broken and wrap to the next line</li>
+                    <li>z-index - Sets the stack order of a positioned element</li>
+              </ol>
+              <h3>JavaScript Reference</h3>
+              <ol>
+                <li>alert() - Displays an alert box with a specified message and an OK button</li>
+                <li>prompt() - Displays a dialog box that prompts the visitor for input</li>
+                <li>confirm() - Displays a dialog box with a specified message and an OK and a Cancel button</li>
+                <li>console.log() - Outputs a message to the console</li>
+                <li>setTimeout() - Sets a delay in milliseconds before executing a function</li>
+                <li>setInterval() - Repeatedly calls a function or executes a code snippet, with a fixed time delay between each call</li>
+                <li>clearTimeout() - Clears the timeout specified by setTimeout()</li>
+                <li>clearInterval() - Clears the interval specified by setInterval()</li>
+                <li>parseInt() - Parses a string and returns an integer</li>
+                <li>parseFloat() - Parses a string and returns a floating-point number</li>
+                <li>isNaN() - Returns true if a value is NaN (Not-a-Number)</li>
+                <li>isFinite() - Returns false if the value is NaN, Infinity, or -Infinity</li>
+                <li>typeof() - Returns a string indicating the type of a variable</li>
+                <li>String() - Converts an object's value to a string</li>
+                <li>Number() - Converts an object's value to a number</li>
+                <li>Array() - Creates a new array object</li>
+                <li>Object() - Creates a new object</li>
+                <li>JSON.parse() - Parses a JSON string, constructing the JavaScript value or object described by the string</li>
+                <li>JSON.stringify() - Converts a JavaScript object or value to a JSON string</li>
+                <li>Math.random() - Returns a random number between 0 (inclusive) and 1 (exclusive)</li>
+                <li>Math.round() - Rounds a number to the nearest integer</li>
+                <li>Math.floor() - Rounds a number down to the nearest integer</li>
+                <li>Math.ceil() - Rounds a number up to the nearest integer</li>
+                <li>Math.max() - Returns the largest of zero or more numbers</li>
+                <li>Math.min() - Returns the smallest of zero or more numbers</li>
+                <li>Array.isArray() - Returns true if an object is an array, and false otherwise</li>
+                <li>Array.from() - Creates a new, shallow-copied Array instance from an array-like or iterable object</li>
+                <li>Array.prototype.map() - Creates a new array with the results of calling a provided function on every element in the array</li>
+                <li>Array.prototype.filter() - Creates a new array with all elements that pass the test implemented by the provided function</li>
+                <li>Array.prototype.reduce() - Applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value</li>
+                <li>Array.prototype.forEach() - Calls a function for each element in the array</li>
+                <li>Array.prototype.indexOf() - Returns the first index at which a given element can be found in the array, or -1 if it is not present</li>
+                <li>Array.prototype.includes() - Determines whether an array includes a certain value among its entries</li>
+                <li>Array.prototype.slice() - Returns a shallow copy of a portion of an array into a new array object</li>
+                <li>Array.prototype.splice() - Changes the contents of an array by removing or replacing existing elements and/or adding new elements in place</li>
+                <li>Array.prototype.sort() - Sorts the elements of an array in place</li>
+                <li>Array.prototype.reverse() - Reverses the elements of an array in place</li>
+                <li>String.prototype.length - Returns the length of a string</li>
+                <li>String.prototype.charAt() - Returns the character at a specified index in a string</li>
+                <li>String.prototype.indexOf() - Returns the first index at which a given character or substring can be found in a string</li>
+                <li>String.prototype.includes() - Determines whether one string may be found within another string</li>
+                <li>String.prototype.substring() - Returns a subset of a string between one index and another</li>
+                <li>String.prototype.trim() - Removes whitespace from both ends of a string</li>
+                <li>String.prototype.toUpperCase() - Converts a string to uppercase letters</li>
+                <li>String.prototype.toLowerCase() - Converts a string to lowercase letters</li>
+                <li>String.prototype.split() - Splits a string into an array of substrings based on a specified separator</li>
+                <li>Date() - Creates a new Date object representing the current date and time</li>
+                <li>Date.prototype.getDate() - Returns the day of the month for the specified date</li>
+                <li>Date.prototype.getMonth() - Returns the month for the specified date (0-based)</li>
+                <li>Date.prototype.getFullYear() - Returns the year for the specified date</li>
+                <li>Date.prototype.getHours() - Returns the hour for the specified date</li>
+                <li>Date.prototype.getMinutes() - Returns the minutes for the specified date</li>
+                <li>Date.prototype.getSeconds() - Returns the seconds for the specified date</li>
+                <li>Date.prototype.getTime() - Returns the numeric value corresponding to the time for the specified date</li>
+                <li>Date.prototype.toISOString() - Returns a string representing a date in ISO format</li>
+                <li>Date.prototype.toString() - Converts a date to a string</li>
+                <li>Date.prototype.setFullYear() - Sets the full year for a specified date</li>
+                <li>Date.prototype.setMonth() - Sets the month for a specified date</li>
+                <li>Date.prototype.setDate() - Sets the day of the month for a specified date</li>
+                <li>Date.prototype.setHours() - Sets the hour for a specified date</li>
+                <li>Date.prototype.setMinutes() - Sets the minutes for a specified date</li>
+                <li>Date.prototype.setSeconds() - Sets the seconds for a specified date</li>
+                <li>document.getElementById() - Gets the element with the specified ID</li>
+                <li>document.querySelector() - Returns the first element that matches a specified CSS selector</li>
+                <li>document.createElement() - Creates an HTML element</li>
+                <li>document.createTextNode() - Creates a text node</li>
+                <li>element.appendChild() - Adds a node to the end of the list of children of a specified parent node</li>
+                <li>element.removeChild() - Removes a child node from the DOM</li>
+                <li>element.setAttribute() - Sets the value of an attribute on the specified element</li>
+                <li>element.getAttribute() - Returns the value of a specified attribute on the element</li>
+                <li>element.addEventListener() - Attaches an event handler to the element</li>
+                <li>navigator.userAgent - Returns the user agent string for the current browser</li>
+                <li>window.innerWidth - Returns the width of the browser window's content area, including scrollbars</li>
+                <li>window.innerHeight - Returns the height of the browser window's content area, including scrollbars</li>
+                <li>window.location.href - Returns the href (URL) of the current page</li>
+                <li>window.alert() - Displays an alert box with a specified message and an OK button</li>
+                <li>window.confirm() - Displays a dialog box with a specified message and an OK and a Cancel button</li>
+                <li>window.prompt() - Displays a dialog box that prompts the visitor for input</li>
+                <li>window.setTimeout() - Sets a delay in milliseconds before executing a function</li>
+                <li>window.setInterval() - Repeatedly calls a function or executes a code snippet, with a fixed time delay between each call</li>
+                <li>window.clearTimeout() - Clears the timeout specified by setTimeout()</li>
+                <li>window.clearInterval() - Clears the interval specified by setInterval()</li>
+                <li>navigator.geolocation.getCurrentPosition() - Gets the current geographical location of the device</li>
+                <li>navigator.geolocation.watchPosition() - Continuously monitors the device's location and updates the position as it changes</li>
+                <li>navigator.geolocation.clearWatch() - Stops the watchPosition() method</li>
+                <li>decodeURI() - Decodes a Uniform Resource Identifier (URI) previously created by encodeURI or by a similar routine</li>
+                <li>encodeURI() - Encodes a Uniform Resource Identifier (URI) by replacing each instance of certain characters by one, two, three, or four escape sequences representing the character's UTF-8 encoding</li>
+                <li>escape() - Deprecated. Encodes a string</li>
+                <li>unescape() - Deprecated. Decodes a string encoded with the escape function</li>
+                <li>Number.isInteger() - Determines whether the passed value is an integer</li>
+                <li>Number.isNaN() - Determines whether the passed value is NaN and its type is Number</li>
+                <li>Number.parseFloat() - Parses an argument and returns a floating-point number</li>
+                <li>Number.parseInt() - Parses a string argument and returns an integer of the specified radix</li>
+                <li>Object.keys() - Returns an array of a given object's own enumerable property names</li>
+                <li>Object.values() - Returns an array of a given object's own enumerable property values</li>
+                <li>Object.entries() - Returns an array of a given object's own enumerable string-keyed property [key, value] pairs</li>
+                <li>Object.hasOwnProperty() - Returns a boolean indicating whether the object has the specified property</li>
+                <li>JSON.stringify() - Converts a JavaScript object or value to a JSON string</li>
+                <li>JSON.parse() - Parses a JSON string, constructing the JavaScript value or object described by the string</li>
+                <li>Promise() - Creates a new Promise object</li>
+                <li>Promise.all() - Returns a single Promise that fulfills with an array of fulfillment values for the passed promises, or rejects with the reason of the first promise that rejects</li>
+                <li>Promise.race() - Returns a promise that fulfills or rejects as soon as one of the promises in an iterable fulfills or rejects, with the value or reason from that promise</li>
+                <li>fetch() - Sends a request to the server and returns a Promise that resolves to the Response to that request</li>
+                <li>async function() - Declares an asynchronous function that returns an AsyncFunction object</li>
+                <li>await expression - Pauses the execution of the async function and waits for the passed Promise's resolution, and then resumes the execution and returns the resolved value</li>
+              </ol>
+              <h3>HTML Entities</h3>
+              <ol>
+                <li>&amp;lt; - Less than (&lt;)</li>
+                <li>&amp;gt; - Greater than (&gt;)</li>
+                <li>&amp;amp; - Ampersand (&amp;)</li>
+                <li>&amp;quot; - Double quotation mark (&quot;)</li>
+                <li>&amp;apos; - Single quotation mark (apostrophe) (&apos;)</li>
+                <li>&amp;nbsp; - Non-breaking space</li>
+                <li>&amp;copy; - Copyright symbol (&copy;)</li>
+                <li>&amp;reg; - Registered trademark symbol (&reg;)</li>
+                <li>&amp;cent; - Cent sign (&cent;)</li>
+                <li>&amp;pound; - Pound sign (&pound;)</li>
+                <li>&amp;yen; - Yen sign (&yen;)</li>
+                <li>&amp;euro; - Euro sign (&euro;)</li>
+                <li>&amp;times; - Multiplication sign (&times;)</li>
+                <li>&amp;divide; - Division sign (&divide;)</li>
+              </ol>
+            </div>
+
+        </fieldset>
+        <hr>
+		<button class="normal" onclick="getLocation()">Get Location</button>
+		<p id="location" class="left">Press button to find location!</p>
+        <hr  class="no-margin-bottom">
+        <!-- tab stuff -->
+        <div class="tabs-container">
+            <div class="center">
+                <li class="tab"><a href="#tab1" class="active" title="Unused Tab" id="tab-1">Tab 1</a></li>
+                <li class="tab"><a href="#tab2" id="tab-2" title="Unused Tab">Tab 2</a></li>
+                <li class="tab"><a href="#tab3" id="tab-3" title="Window Manager">Tab 3</a></li>
+                <li class="tab"><a href="#tab4" id="tab-4" title="Unused Tab">Tab 4</a></li>
+            </div>
+    		<div class="tab__panels">
+<div id="tab1">
+    <p>Tab 1</p>
+</div>
+
+<div id="tab2">
+    <p>Tab 2</p>
+</div>
+
+<div id="tab3">
+    <h2>Window Manager</h2>
+    <button onclick="newWindowManagerWindow()">Open New Window</button>
+    <button onclick="saveWindowManagerSettings()">Save Window Settings</button>
+    <br>
+    <label for="windowTitle">Title:</label>
+    <input placeholder="(default)" id="windowTitle">
+    <br>
+    <label for="windowHeading">Heading:</label>
+    <input placeholder="(none)" id="windowHeading">
+    <br>
+    <label for="windowText">Text:</label>
+    <input placeholder="(none)" id="windowText">
+    <br>
+    <label for="windowButton">Button:</label>
+    <input placeholder="(leave empty for no button)" id="windowButton">
+    <br>
+    <label for="windowMessage">Message:</label>
+    <input placeholder="(leave empty for no message)" id="windowMessage">
+</div>
+
+<div id="tab4">
+    <p>Tab 4</p>
+</div>
+    		</div>
+		</div>
+		<hr>
+		<button class="normal" id="btn11">Change Box</button>
+		<hr>
+		<div id="box"><p id="boxtext"></p></div>
+		<hr>
+        <fieldset>
+		    <legend>JavaScript Code Editor</legend>
+		    <textarea class="js" id="jscode" placeholder="Write a JavaScript code snippet in here..." spellcheck="false">
+// EXAMPLE SCRIPT - RIGHT CLICK TO RUN
+const app = open("","","width=500,height=425")
+app.moveTo((window.screen.width - 500) / 2, (window.screen.height - 425) / 2)
+app.document.write(`
+<svg width="100%" height="100%">
+	<path name="square" d="M 50,50 L 150,50 L 150,150 L 50,150 Z" fill="red" stroke="black" stroke-width="5"/>
+	<path name="octagon" d="M 350,75 L 400,75 L 425,100 L 425,150 L 400,175 L 350,175 L 325,150 L 325, 100 Z" fill="skyblue" stroke="black" stroke-width="5"/>
+	<path name="triangle" d="M 200,200 L 200,300 L 300,300 Z" fill="limegreen" stroke="black" stroke-width="5"/>
+</svg>
+`)
+app.document.title = "Example Window"
+app.document.body.style.margin = "0"
+const shapes = app.document.querySelectorAll("svg path")
+shapes.forEach((shape) => {
+	shape.onclick = function() {
+		const clicked = shape.getAttribute("name")
+		app.alert("You clicked on: " + clicked)
+	}
+})</textarea>
+            <div title="JavaScript Console" id="console"><p>Right click the code editor to run your code!</p></div>
+        </fieldset>
+        <hr>
+        <p class="left">First Version Relase Date: 03/24/22</p>
+        <hr>
+		<fieldset style="padding-top:20px;">
+		    <legend>Fidgets & Things</legend>
+		    <div class="center">
+    		    <input type="range" style="accent-color:orange;position:relative;bottom:7px;">
+        		<button class="normal" id="btn7" accesskey="r">Random Number</button>
+        		<button class="normal" id="btn41">Random Character</button>
+    		</div>
+		    <div class="center">
+    		<input type="color" class="colorInput">
+    		<input type="color" class="colorInput">
+    		<input type="color" class="colorInput">
+    		<input type="color" class="colorInput">
+    		<input type="color" class="colorInput">
+    		<input type="color" class="colorInput">
+    		<input type="color" class="colorInput">
+    		<input type="color" class="colorInput">
+    		<input type="color" id="gamepad0"  class="colorInput">
+		</div>
+		</fieldset>
+        <hr>
+		<p style="text-align: center; position:relative; bottom:0px;" id="copyright">&copy 2024 DressedAlarm184</p>
+		<dialog id="gsearch">
+			<p>Search Google</p>
+			<input class="dialog" id="gsearch-input">
+			<button class="dialog" id="gsearch-button">Search</button>
+		</dialog>
+		<dialog id="scratchproj">
+			<p>Enter Scratch Project ID</p>
+			<input class="dialog" id="scratchproj-input">
+			<button class="dialog" id="scratchproj-button">Play</button>
+		</dialog>
+
+        <dialog id="custompopupBox">
+            <div id="custompopupBoxMessage"></div>
+            <button style="text-align:center" id="closeAlert" onclick="closeCustompopupBox()">CLOSE</button>
+        </dialog>
+	</main>
+    <div id="notif">This is a <br> test notif</div>
+	<script src="script.js"></script>
+</body>
+</html>

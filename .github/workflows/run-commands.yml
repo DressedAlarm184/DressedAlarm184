@@ -1,0 +1,40 @@
+name: Execute User Command
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Enter Command'
+        required: true
+      commit:
+        description: 'Commit Message'
+        required: false
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Setup Config
+        run: |
+          git config user.email "actions@github"
+          git config user.name "GitHub Actions"
+      
+      - name: Execute Command
+        run: ${{ github.event.inputs.command }}
+      
+      - name: Stage Changes
+        if: ${{ github.event.inputs.commit != '' && github.event.inputs.commit != null }}
+        run: git add .
+      
+      - name: Commit Changes
+        if: ${{ github.event.inputs.commit != '' && github.event.inputs.commit != null }}
+        run: git commit -m "${{ github.event.inputs.commit }}"
+      
+      - name: Push Changes
+        if: ${{ github.event.inputs.commit != '' && github.event.inputs.commit != null }}
+        run: git push origin main

@@ -1,0 +1,664 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap');
+
+* {
+    font-family: "Open Sans";
+    color: black;
+    cursor: url("cursor1.cur"),auto;
+    user-select: none;
+    tab-size: 4;
+}
+
+.colorInput {
+    position: relative;
+    left: 5px;
+}
+
+#btn60, #btn61 {
+    margin-top: 10px;
+    font-size: 14px
+}
+
+#popupSelector select{
+    border: 2px solid black;
+}
+
+img {
+    pointer-events: none;
+}
+
+#inventoryScreen button {
+    height: 20px;
+    width: 20px;
+    background: #DD0000;
+    position: absolute;
+    bottom: 230px;
+    left: 110px;
+}
+
+#notif {
+    position: fixed;
+    right: -1000px;
+    top: 15vh;
+    color: black;
+    margin: 0px;
+    cursor: auto;
+    background: lightskyblue;
+    padding-block: 10px;
+    font-size: 20px;
+    text-align: center;
+    min-width: 150px;
+    border: 4px solid black;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding-inline: 15px;
+    min-height: 50px;
+}
+
+#notif.slide {
+    animation: slide-in 6s ease-in-out forwards;
+}
+
+#randomColorText {
+    color: white;
+    background: black;
+    padding-inline: 5px;
+    border-radius: 5px;
+    font-family: "Source Code Pro";
+}
+
+.marginless {
+    margin: 5px;
+    margin-left: 0px;
+}
+
+@keyframes slide-in {
+    0% {
+        right: -1000px;
+        transform: scale(0);
+        opacity: 0;
+    }
+    10% {
+        right: 10px;
+    }
+    20% {
+        right: 10px;
+        transform: scale(1);
+        opacity: 1;
+    }
+    30% {
+        right: 10px;
+    }
+    40% {
+        right: 10px;
+    }
+    50% {
+        right: 10px;
+    }
+    60% {
+        right: 10px;
+    }
+    70% {
+        right: 10px;
+    }
+    80% {
+        right: 10px;
+        transform: scale(1);
+        opacity: 1;
+    }
+    90% {
+        right: 10px;
+    }
+    100% {
+        right: -1000px;
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+#stopWatchDisplay {
+    font-size: 40px;
+    border: 3px solid black;
+    padding-inline: 40px;
+    padding-block: 15px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+#appurl {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: calc(100% - 5px)
+}
+
+hr {
+    height: 4px;
+    background: black;
+    border: 0px;
+    border-radius:0px;
+}
+
+#box {
+    height: 50px;
+    width: 50px;
+    background: red;
+    margin: 20px;
+    padding: 2px;
+    border: 5px solid black;
+}
+
+.outputs {
+        width: 100%;
+    }
+
+.command {
+    width: 100px;
+    margin:2px;
+}
+
+.command[type="number"] {
+    width: 40px;
+}
+
+#deviceinfo {
+    position: relative;
+}
+
+img[name="img-island"] {
+    position: absolute;
+    transform: translateY(-260px);
+    right: 0px;
+    display: none;
+}
+
+#note {
+    resize: none;
+    border: 3px solid black;
+    position:relative;
+    bottom: 5px;
+    left: 4%;
+    width: 90%;
+    background: lightgray;
+    font-size: 16px;
+    margin-top: 10px;
+    font-family: "Source Code Pro", monospace;
+}
+
+textarea {
+    resize: none;
+    border: 3px solid black;
+    position:relative;
+    left: 5%;
+    bottom: 5px;
+    background: lightgray;
+    color: black;
+    font-size: 16px;
+    cursor: url("cursor2.cur"),auto;
+    border-radius: 8px;
+    font-family: "Source Code Pro";
+}
+
+textarea, input {
+    user-select: text;
+}
+
+select {
+    cursor: url("cursor2.cur"),auto;
+}
+
+.small {
+    resize: none;
+    border: 2px solid black;
+    position: relative;
+    left: 5px;
+    top: 1px;
+    width: 30.4%;
+}
+
+.js {
+    height:220px;
+    width: 90%;
+    position: relative;
+    left: calc(5% - 5px);
+    margin-top: 10px;
+    white-space: nowrap;
+}
+
+.normal{
+    position: relative;
+    left: 5px;
+    border: 3px solid black;
+}
+
+button {
+    background-color: #35dd35;
+    font-weight: bold;
+    font-size: 16px;
+    zoom: 90%;
+    color: black;
+    padding:0.2em;
+    cursor: url("cursor2.cur"),auto;
+    border: 3px solid black !important;
+    border-radius: 7px;
+    transition: filter 0.25s ease;
+}
+
+button:hover {
+    filter: brightness(1.2);
+}
+
+button:active {
+    filter: brightness(0.9);
+}
+
+fieldset {
+    border:3px solid black;
+    position: relative;
+    margin: 10px;
+    border-radius: 7px;
+}
+
+#myCanvas {
+    width: 300px;
+    border: 2px solid black;
+    height: 300px;
+    position:relative;
+    background:white;
+}
+
+#iframe {
+    border: none;
+    width: 100%;
+    position:relative;
+    height: 350px;
+}
+
+#helpandtips {
+    list-style-type: decimal-leading-zero;
+}
+
+.left {
+    position:relative;
+    left:5px;
+}
+
+body {
+    margin: 0px auto;
+    background-color: #333;
+    overflow: scroll;
+}
+
+.tab__panels div {
+    margin-left: 10px;
+    height: 220px;
+    overflow-y: auto;
+}
+
+li.tab {
+    display: inline;
+    margin: 10px;
+    text-align: center;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0;
+}
+
+.tabs-container div.center {
+    background: white;
+    height: 45px;
+    margin-top: 0;
+    margin-inline: auto;
+    width: fit-content;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 4px solid black;
+    border-top: none;
+    margin-bottom: 5px;
+}
+
+.tab__panels div#tab3 input,label {
+	margin-top: 5px;
+}
+
+.tab__panels div#tab3 h2 {
+    margin-block: 5px;
+    text-align: right;
+    margin-right: 10px;
+    text-decoration: underline;
+}
+
+.tab__panels div#tab3 input {
+    width: calc(100% - 100px);
+}
+
+.tabs-container div.center li a.active {
+    background-color: red;
+    color: white;
+}
+.tabs-container div.center li a {
+    background-color: orange;
+    font-weight: bold;
+    font-size: 16px;
+    zoom: 90%;
+    color: black;
+    padding:0.2em;
+    cursor: url("cursor2.cur"),auto;
+    border: 3px solid black !important;
+    border-radius: 7px;
+    transition: filter 0.25s ease;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+#console {
+    height: 150px;
+    background: lightgray;
+    position: relative;
+    width: calc(90% + 5px);
+    height: 140px;
+    left: calc(5% - 5px);
+    border: 3px solid black;
+    border-radius: 8px;
+    margin-bottom: 2px;
+    overflow: auto;
+}
+
+#console p {
+    margin: 0px;
+    padding: 0px;
+    padding-left: 3px;
+    font-family: "Source Code Pro";
+}
+
+html,body {
+    cursor: auto;
+    height: 100%;
+}
+
+#countnumber {
+    font-size: 50px;
+    text-align: center;
+    margin:2px;
+}
+
+#btn55, #btn56 {
+    margin-top: 10px;
+}
+
+.white-fieldset legend {
+    background-color: #EEE
+}
+
+main {
+    width: 100%;
+    border-radius: 0px;
+    position:relative;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    background: #0099FF;
+    zoom: 80%;
+}
+
+input[type="checkbox"].command2 {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: lime;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 4px;
+    border: 2px solid black;
+}
+
+legend {
+    text-transform: uppercase;
+    border: 3px solid black;
+    border-radius: 5px;
+    text-align: center;
+    background-color: skyblue;
+    padding-inline: 5px;
+}
+
+
+input[type="checkbox"].command2:checked {
+    background-color: red;
+}
+
+div.command2 {
+    position: relative;
+    bottom: 5px;
+}
+
+body.background {
+	background: url("background.png")
+}
+
+@media screen and (width > calc(560px * 1.2)) {
+    main {
+        width: 560px;
+        border: 4px solid black;
+        border-radius: 30px;
+        height: 95%;
+        max-height: 450px;
+        zoom: 120%;
+    }
+    body {
+        display: flex;
+        align-items:center;
+        justify-content:center;
+        width: 100%;
+        overflow: hidden;
+    }
+    img[name="img-island"] {
+        display: inline;
+    }
+    
+    @supports not (zoom: 1){
+        main {
+            transform: scale(1.2);
+        }
+        dialog {
+            transform: scale(2);
+        }
+    }
+}
+
+dialog::backdrop{
+    background-color: #000000aa;
+    cursor: url("cursor1.cur"),default;
+}
+
+dialog {
+    zoom: 150%;
+    border: 3px solid black;
+    background-color: #AAAAAA;
+    border-radius: 10px;
+}
+
+input.dialog {
+    border: 3px solid black;
+}
+
+dialog#custompopupBox {
+    border-radius: 10px;
+    background-color:white;
+    width: 250px;
+    font-size: 14px;
+    padding-top: 0px;
+}
+
+#custompopupBoxMessage {
+    margin-block: 10px;
+    height: 150px;
+    overflow: auto;
+}
+
+button.openbtn {
+    font-size: 12px;
+    border: none !important;
+    background-color: lightgray;
+    transition: none;
+    filter: brightness(1) !important;
+}
+
+
+#closeAlert {
+    background-color: #0088FF;
+    border:none !important;
+    border-radius: 8px;
+    position: relative;
+    left: 220px;
+}
+
+#header {
+    margin: 15px;
+    text-align: center;
+    position: relative;
+    top: 2px;
+    font-size: 25px;
+}
+
+#loading {
+    overflow: hidden;
+    outline: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+::selection {
+    color: black;
+    background: orange;
+}
+
+main::-webkit-scrollbar {
+    display:none;
+}
+
+input {
+    cursor: url("cursor2.cur"),auto;
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 70px; opacity: 1;}
+}
+
+@keyframes fadeout {
+    from {bottom: 70px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+
+#texteditor {
+    text-align:center;
+    margin: 5px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.calculator-parts {
+    --amount: 7.5px;
+    padding-left:var(--amount);
+    padding-right:var(--amount);
+    position:relative;
+    margin-top: 3px;
+}
+
+.helpbutton {
+    cursor: url("cursor2.cur"),default;
+}
+
+.top-button-container {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 5px;
+    margin: 7px;
+}
+
+.equal-width-2 {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 5px;
+}
+
+.equal-width-10 {
+    display: grid;
+    grid-template-columns: repeat(10,1fr);
+    gap: 5px;
+    margin-inline: 7px;
+    margin-bottom: 2px;
+}
+
+.equal-width-9 {
+    display: grid;
+    grid-template-columns: repeat(9,1fr);
+    gap: 5px;
+    margin-inline: 7px;
+}
+
+#btn7, #btn41 {
+    position: relative;
+    bottom: 10px;
+}
+
+.center * {
+    margin: 0px;
+    position: relative !important;
+    left: 0px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: red;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 4px;
+    border: 2px solid black;
+}
+
+input[type="checkbox"]:checked {
+    background-color: lime;
+}
+
+#element-list {
+    height: 300px;
+    overflow-y: scroll;
+    margin-top: 5px;
+}
+
+/* Customize the scrollbar */
+#element-list::-webkit-scrollbar {
+  width: 12px; /* Set the width of the scrollbar */
+}
+
+#element-list::-webkit-scrollbar-thumb {
+  background-color: #888; /* Set the color of the thumb */
+  border-radius: 6px; /* Set the border radius of the thumb */
+}
+
+#element-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Set the color of the thumb on hover */
+}
+
+#element-list {
+    display: none;
+}
+
+/* Show the element with id element-list when the checkbox is checked */
+input#show-element-list[type="checkbox"]:checked + #element-list {
+    display: block; /* or any other value you prefer */
+}
