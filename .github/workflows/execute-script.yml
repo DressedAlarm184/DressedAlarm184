@@ -7,6 +7,9 @@ on:
 permissions: 
   contents: write
 
+env:
+  SCRIPT: ${{ vars.script }}
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -20,4 +23,4 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           
       - name: Execute Script
-        run: echo "${{ vars.script }}" | tr -d '\r' | bash -
+        run: echo "$SCRIPT" | tr -d '\r' | bash -
