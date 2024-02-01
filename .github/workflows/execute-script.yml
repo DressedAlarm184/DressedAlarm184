@@ -4,6 +4,9 @@ run-name: Run User Defined Script
 on:
   workflow_dispatch:
 
+permissions: 
+  contents: write
+
 jobs:
   main:
     runs-on: ubuntu-latest
