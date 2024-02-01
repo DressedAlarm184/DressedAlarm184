@@ -619,7 +619,7 @@ document.getElementById("btn21").onclick = function() { // reload app //
 document.getElementById("btn19").onclick = function() { // open in fullscreen //
     const mainElement = document.querySelector('main')
 
-    if (confirm("You are about to enter fullscreen mode. Certin features will not work as intented while in fullscreen mode. Would you like to continue?")) {
+    if (confirm("You are about to enter fullscreen mode. Certin features will not work as intended while in fullscreen mode. Would you like to continue?")) {
         if (mainElement) {
             if (mainElement.requestFullscreen) {
                 mainElement.requestFullscreen()
