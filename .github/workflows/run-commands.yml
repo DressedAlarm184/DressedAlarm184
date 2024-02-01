@@ -9,7 +9,8 @@ on:
         required: true
       commit:
         description: 'Commit Message'
-        required: false
+        required: true
+        default: none
 
 jobs:
   main:
@@ -26,16 +27,16 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       
       - name: Execute Command
-        run: ${{ github.event.inputs.command }}
+        run: ${{ inputs.command }}
       
       - name: Stage Changes
-        if: ${{ github.event.inputs.commit != '' && github.event.inputs.commit != null }}
+        if: ${{ inputs.commit != 'none' }}
         run: git add .
       
       - name: Commit Changes
-        if: ${{ github.event.inputs.commit != '' && github.event.inputs.commit != null }}
-        run: git commit -m "${{ github.event.inputs.commit }}"
+        if: ${{ inputs.commit != 'none' }}
+        run: git commit -m "${{ inputs.commit }}"
       
       - name: Push Changes
-        if: ${{ github.event.inputs.commit != '' && github.event.inputs.commit != null }}
+        if: ${{ inputs.commit != 'none' }}
         run: git push origin main
