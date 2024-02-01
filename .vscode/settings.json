@@ -1,0 +1,104 @@
+{
+    "editor.fontSize": 16,
+    "editor.cursorBlinking": "smooth",
+    "workbench.editorAssociations": {
+        "*.html": "default",
+        "*.cur": "default"
+    },
+    "workbench.startupEditor": "none",
+    "remoteHub.commitDirectlyWarning": "off",
+
+    "workbench.colorCustomizations": {
+        "editor.background": "#00132d",
+        "activityBar.background": "#000000",
+        "sideBar.background": "#00051b",
+        "sideBar.border": "#00132d",
+        "sideBarTitle.foreground": "#ffffff",
+        "editorGroupHeader.tabsBackground": "#000000", // File tab bar background color
+        "editorGroupHeader.tabsBorder": "#00132d",     // File tab bar border color
+        "editorGroupHeader.noTabsBackground": "#000000", // Background color when no tabs are open
+        "editorGroup.border": "#000000",               // Border color around the editor group (tabs)
+        "titleBar.activeBackground": "#000000",        // Title bar background color when VS Code is focused
+        "titleBar.inactiveBackground": "#000000",      // Title bar background color when VS Code is not focused
+        "titleBar.activeForeground": "#ffffff",        // Title bar text color when VS Code is focused
+        "titleBar.inactiveForeground": "#ffffff",      // Title bar text color when VS Code is not focused
+        "activityBarBadge.background": "#007acc",      // Badge color in the activity bar
+        "tab.activeBackground": "#013a0f",            // Active tab background color
+        "tab.inactiveBackground": "#500101",          // Inactive tab background color
+        "tab.activeBorder": "#333333",                // Active tab border color
+        "tab.activeForeground": "#ffffff",            // Active tab text color
+        "tab.inactiveForeground": "#ffffff",
+        "tab.hoverBackground": "#5f6500",
+        "list.hoverBackground": "#5f6500"
+    },
+
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": [
+                    "keyword.control",
+                    "keyword.operator",
+                    "keyword.other"
+                ],
+                "settings": {
+                    "foreground": "#41cf00"
+                }
+            },
+            {
+                "scope": [
+                    "string",
+                    "constant.character.escape",
+                    "variable.other.readwrite"
+                ],
+                "settings": {
+                    "foreground": "#db6969"
+                }
+            },
+            {
+                "scope": [
+                    "variable",
+                ],
+                "settings": {
+                    "foreground": "#ff00d9"
+                }
+            },
+            {
+                "scope": [
+                    "entity.name.function",
+                    "support.function"
+                ],
+                "settings": {
+                    "foreground": "#c1bc26" // Color for function names
+                }
+            },
+            {
+                "scope": [
+                    "comment",
+                    "punctuation.definition.comment"
+                ],
+                "settings": {
+                    "foreground": "#52df00", // Color for comments
+                    "fontStyle": "italic"
+                }
+            },
+        ]
+    },
+    "explorer.confirmDragAndDrop": false,
+    "githubIssues.queries": [
+        {
+            "label": "My Issues",
+            "query": "default"
+        },
+        {
+            "label": "Created Issues",
+            "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+        },
+        {
+            "label": "Recent Issues",
+            "query": "state:open repo:${owner}/${repository} sort:updated-desc"
+        }
+    ],
+    "editor.insertSpaces": false,
+    "editor.minimap.enabled": false,
+    "editor.detectIndentation": false
+}
