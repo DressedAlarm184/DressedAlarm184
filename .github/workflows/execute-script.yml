@@ -8,8 +8,7 @@ jobs:
   main:
     runs-on: ubuntu-latest
     env:
-      SCRIPT: |
-        ${{vars.script}}
+      SCRIPT: ${{vars.script}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -19,11 +18,6 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
-      - name: Convert Line Endings
-        run: |
-          script_content=$(echo "$SCRIPT" | tr -d '\r')
-          echo "$script_content" > script.sh
-
       - name: Execute Script
         run: |
-          bash script.sh
+          echo "$SCRIPT" | tr -d '\r' | bash -
