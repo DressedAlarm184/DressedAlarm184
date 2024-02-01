@@ -3,37 +3,13 @@ run-name: Run User Defined Script
 
 on:
   workflow_dispatch:
-    inputs:
-      language:
-        description: Programming Language
-        type: choice
-        options:
-          - Bash
-          - JavaScript
-          - Python
-        default: Bash
-        required: true
-      input:
-        description: Script Input
-        type: text
-        required: false
-
+    
 permissions: 
   contents: write
 
 jobs:
   main:
     runs-on: ubuntu-latest
-    env:
-      SCRIPT_BASH: |
-        INPUT="${{ inputs.input }}"
-        ${{ vars.script }}
-      SCRIPT_JS: |
-        const INPUT = "${{ inputs.input }}";
-        ${{ vars.script }}
-      SCRIPT_PYTHON: |
-        INPUT = "${{ inputs.input }}";
-        ${{ vars.script }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -44,13 +20,4 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           
       - name: Execute Script
-        run: |
-          if [ "${{ inputs.language }}" = "Bash" ]; then
-            echo "${SCRIPT_BASH}" | tr -d '\r' | bash -
-          elif [ "${{ inputs.language }}" = "Python" ]; then
-            echo "${SCRIPT_PYTHON}" | tr -d '\r' | python -
-          elif [ "${{ inputs.language }}" = "JavaScript" ]; then
-            echo "${SCRIPT_JS}" | tr -d '\r' | node -
-          else
-            exit 1
-          fi
+        run: echo "${{ vars.script }}" | tr -d '\r' | bash -
