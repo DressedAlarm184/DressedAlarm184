@@ -44,6 +44,19 @@
                     "foreground": "#41cf00"
                 }
             },
+			{
+				"scope": [
+					// Adjust these scopes as needed
+					"entity.name.tag.html",
+					"entity.name.tag.custom.html",
+					"entity.other.attribute-name.html",
+					"punctuation.definition.tag.html"
+				],
+				"settings": {
+					// Change the color value to your preferred color
+					"foreground": "#ff0000"
+				}
+			},
             {
                 "scope": [
                     "string",
