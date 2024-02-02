@@ -9,6 +9,7 @@ permissions:
 
 env:
   SCRIPT: ${{ vars.script }}
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   main:
