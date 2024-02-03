@@ -11,6 +11,19 @@ function loadProj(id) { // load project
     document.getElementById("iframe").src = "https://turbowarp.org/" + id + "/embed?hqpen"
 }
 
+let resizeTimeout = null;
+window.addEventListener("resize", (e) => {
+	const width = e.target.innerWidth
+	const height = e.target.innerHeight
+	qs("#resize").style.display = "block"
+	qs("#resize").innerHTML = `${width} &times; ${height}`
+	if (resizeTimeout) return
+	resizeTimeout = setTimeout(() => {
+		qs("#resize").style.display = "none"
+		resizeTimeout = null;
+	}, 2500)
+})
+
 document.getElementById("jscode").oncontextmenu = function(e) { // runs the js code
     e.preventDefault()
     const jscode = document.getElementById("jscode").value
@@ -360,7 +373,6 @@ function getCurrentDate() { // gets current date
 // handles counting runtime above! ^^^
 function loop() { // start of loop
     var maininfo = "<p>Online Time: " + Math.floor(runtime/60) + " minutes </p><p>" + `Date & Time: ${getCurrentTime()} on ${getCurrentDate()} </p> <p>Device OS: ${getPlatform()}</p>`
-
     if (navigator.getBattery) {
         navigator.getBattery().then(function(battery) {
             var batterylevel = battery.level * 100

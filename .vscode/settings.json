@@ -1,6 +1,7 @@
 {
     "editor.fontSize": 16,
     "editor.cursorBlinking": "smooth",
+	"editor.fontFamily": "Source Code Pro",
     "workbench.editorAssociations": {
         "*.html": "default",
         "*.cur": "default"
@@ -97,21 +98,9 @@
         ]
     },
     "explorer.confirmDragAndDrop": false,
-    "githubIssues.queries": [
-        {
-            "label": "My Issues",
-            "query": "default"
-        },
-        {
-            "label": "Created Issues",
-            "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
-        },
-        {
-            "label": "Recent Issues",
-            "query": "state:open repo:${owner}/${repository} sort:updated-desc"
-        }
-    ],
     "editor.insertSpaces": false,
     "editor.minimap.enabled": false,
-    "editor.detectIndentation": false
+	"editor.tabSize": 4,
+    "editor.detectIndentation": false,
+	"editor.matchBrackets": "always"
 }
