@@ -102,22 +102,6 @@ function changebackground(color) { // function to change bg color
     localStorage.setItem("app.settings.bgcolor",colorSettings)
 }
 
-qs("#btn56").onclick = function() { // reset bg color
-    colorSettings = "#333"
-    document.body.style.backgroundColor = colorSettings
-    localStorage.setItem("app.settings.bgcolor",colorSettings)
-    qs("#backgroundSelector").value = "#FFFFFF"
-}
-
-qs("#btn55").onclick = () => { // change bg color
-	if (!(document.body.classList.contains("background"))) {
-    	changebackground(qs("#backgroundSelector").value)
-	} else {
-		alert("You can not change the background color while the background image is active!")
-	}
-}
-
-
 // javascript calculator
 {qs("#calc1").onclick = () => {
     if (qs("#calc").innerText.length < 30)
@@ -649,21 +633,6 @@ qs("#btn37").onclick = function() {
 
 if(!(localStorage.getItem("app.settings.togglebg"))) {
 	localStorage.setItem("app.settings.togglebg", "no")
-}
-
-if(localStorage.getItem("app.settings.togglebg") == "yes") {
-	document.body.className = "background"
-} else {
-	document.body.className = ""
-}
-
-qs("#btn36").onclick = () => {
-    document.body.classList.toggle("background")
-	if (document.body.classList.contains("background")) {
-		localStorage.setItem("app.settings.togglebg", "yes")
-	} else {
-		localStorage.setItem("app.settings.togglebg", "no")
-	}
 }
 
 document.getElementById("btn15").onclick = function() { // search modal //
