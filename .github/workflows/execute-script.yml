@@ -7,8 +7,7 @@ permissions:
 
 env:
   SCRIPT: ${{ vars.script }}
-  GH_TOKEN: ${{ secrets.ACTION_TOKEN }}
-
+  
 jobs:
   main:
     runs-on: ubuntu-latest
