@@ -7,7 +7,6 @@ permissions:
 
 env:
   SCRIPT: ${{ vars.script }}
-  GH_TOKEN: ${{ secrets.TOKEN }}
   
 jobs:
   main:
