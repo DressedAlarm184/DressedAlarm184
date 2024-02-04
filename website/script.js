@@ -17,7 +17,9 @@ window.addEventListener("resize", (e) => {
 	const height = e.target.innerHeight
 	qs("#resize").style.display = "block"
 	qs("#resize").innerHTML = `${width} &times; ${height}`
-	if (resizeTimeout) return
+	if (resizeTimeout) {
+		clearTimeout(resizeTimeout)
+	}
 	resizeTimeout = setTimeout(() => {
 		qs("#resize").style.display = "none"
 		resizeTimeout = null;
