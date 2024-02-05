@@ -284,7 +284,10 @@ function popupBox(msg, w = 250, h = 80, f = 14, l = 220) { // opens popup box
         qs("#custompopupBoxMessage").style.fontSize = `${f}px`
         qs("#closeAlert").style.left = `${l}px`
         qs("#custompopupBoxMessage").style.fontFamily = "Source Code Pro"
-        qs("#custompopupBoxMessage").scrollBy(0,-1000000)
+		qs("#custompopupBoxMessage").scrollBy(0, -1000000)
+		if (browserName == "Firefox") {
+			qs("#closeAlert").style.left = `${l - 20}px`
+		}
 	} else {
 		throw new SyntaxError("No message provided")
 	}
