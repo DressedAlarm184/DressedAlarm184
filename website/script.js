@@ -244,7 +244,7 @@ if(userAgent.match(/chrome|chromium|crios/i)){
     qs("main").style.width = "600px"
     document.querySelectorAll("legend").forEach((element) => {
         element.setAttribute("align","center")
-    })
+	})
 }  else if(userAgent.match(/safari/i)){
     browserName = "Safari"
 }else if(userAgent.match(/opr\//i)){

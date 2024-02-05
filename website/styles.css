@@ -288,7 +288,7 @@ fieldset {
 body {
   margin: 0px auto;
   background-color: #333;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .tab__panels div {
@@ -531,11 +531,6 @@ button.openbtn {
   position: relative;
   top: 2px;
   font-size: 25px;
-}
-
-#loading {
-  overflow: hidden;
-  outline: none;
 }
 
 @keyframes spin {
