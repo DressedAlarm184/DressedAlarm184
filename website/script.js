@@ -785,7 +785,7 @@ qs("#btn36").onclick = function() {
 				if (index != data.length - 1) {
 					newWindow.document.write(`<hr>`)
 				}
-				newWindow.document.title = `${newWindow.name} (${data.length} Issues)`
+				newWindow.document.title = `${newWindow.name}`
             });
         })
         .catch(error => {
