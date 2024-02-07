@@ -65,7 +65,7 @@ function clearconsole() { // clears the fake console
 
 
 qs("#btn1").onclick = () => { // opens the github repo
-    open("https://github.com/DressedAlarm184/dressedalarm184.github.io")
+    open("https://github.com/DressedAlarm184/DressedAlarm184")
 }
 
 var gamepad0 = true
@@ -772,6 +772,25 @@ document.getElementById("btn17").onclick = function() { // deleting files //
             notif("File was<br>not found!")
         }
     }
+}
+
+qs("#btn36").onclick = function() {
+	fetch("https://api.github.com/repos/DressedAlarm184/DressedAlarm184/issues")
+        .then(response => response.json())
+        .then(data => {
+			const newWindow = open("","Website Issues","width=600,height=350")
+            data.forEach(function(issue, index) {
+                newWindow.document.write(`${issue.title} (#${issue.number})<br>`);
+				newWindow.document.write(`${(issue.body).replace("\n","<br>")}`)
+				if (index != data.length - 1) {
+					newWindow.document.write(`<hr>`)
+				}
+				newWindow.document.title = `${newWindow.name} (${data.length} Issues)`
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
 }
 
 qs("#btn54").onclick = function() { // renaming files // 
