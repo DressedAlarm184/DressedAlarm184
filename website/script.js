@@ -5,8 +5,6 @@ window.onerror = function(error) {
     popupBox(error)
 }
 
-alert = popupBox
-
 function loadProj(id) { // load project
     document.getElementById("iframe").src = "https://turbowarp.org/" + id + "/embed?hqpen"
 }
@@ -983,7 +981,7 @@ async function executeCommand(commandLine) {
     try {
         switch (command) {
             case 'help':
-                displayOutput('Available Commands: help, clear, echo, date, math, cat');
+                displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval');
                 break;
             case 'clear':
                 clearTerminal();
@@ -1020,6 +1018,21 @@ async function executeCommand(commandLine) {
 					displayOutput(fileContent)
 				}
 				break
+			case 'open':
+				if (args != "") {
+					open("http://" + args);
+					displayOutput("Opening the provided website...")
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+				break;
+			case 'eval':
+				if (args != "") {
+                	eval(args);
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+                break;
             case '':
                 break;
             default:
@@ -1034,7 +1047,6 @@ function isValidMathEquation(str) {
 	const validMathEquationRegex = /^[\d\s.+\-*/]+$/;
 	return validMathEquationRegex.test(str);
 }
-
 
 function displayOutput(output, isCommand = false, isError = false) {
 	output = String(output)
@@ -1063,12 +1075,20 @@ function displayOutput(output, isCommand = false, isError = false) {
 		outputDiv.appendChild(outputLine);
 	});
 	terminal.scrollTop = terminal.scrollHeight;
+	if (output == "") {
+		const brElement = document.createElement('br');
+		outputDiv.appendChild(brElement);
+		terminal.scrollTop = terminal.scrollHeight;		
+	}
 }
 
 function clearTerminal() {
 	outputDiv.innerHTML = ""
 }
 
+displayOutput("Welcome to the Command Prompt!")
+displayOutput("Type 'help' for a list of commands.")
+displayOutput("")
 
 // TAB 3 // Window Mangager // TAB 3
 // The following code is for tab #3 (window manager)

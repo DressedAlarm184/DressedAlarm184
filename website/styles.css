@@ -328,6 +328,8 @@ body {
 	caret-color: red;
 	pointer-events: none;
 	font-weight: bold;
+	position: relative;
+	right: 2px;
 }
 
 .terminal #output div {
