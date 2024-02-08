@@ -291,6 +291,10 @@ body {
   overflow: auto;
 }
 
+#menu {
+	display: none;
+}
+
 .tab__panels div {
   margin-left: 10px;
   height: 220px;
@@ -326,8 +330,9 @@ label {
 }
 
 .tab__panels div#tab3 h2 {
-  margin-block: 5px;
-  text-align: right;
+  margin-bottom: 5px;
+  margin-top: 0px;
+  text-align: center;
   margin-right: 10px;
   text-decoration: underline;
 }
@@ -454,6 +459,9 @@ div.command2 {
   }
   img[name="img-island"] {
     display: inline;
+  }
+  #menu {
+	display: block;
   }
 
   @supports not (zoom: 1) {
