@@ -959,6 +959,116 @@ tabsContainter.addEventListener("click", (e) => { // changes the active tab
     clickedTab.classList.add("active")
 })
 
+const terminal = document.getElementById('terminal');
+const commandInput = document.getElementById('commandInput');
+const outputDiv = document.getElementById('output');
+
+terminal.addEventListener('click', function() {
+	commandInput.focus();
+});
+
+commandInput.addEventListener('keydown', function(event) {
+	if (event.key === 'Enter') {
+		const command = commandInput.value;
+		executeCommand(command);
+		commandInput.value = '';
+	}
+});
+
+async function executeCommand(commandLine) {
+    const parts = commandLine.trim().split(' ');
+    const command = parts.shift();
+    const args = parts.join(' ');
+    displayOutput(commandLine, true);
+    try {
+        switch (command) {
+            case 'help':
+                displayOutput('Available Commands: help, clear, echo, date, math, cat');
+                break;
+            case 'clear':
+                clearTerminal();
+                break;
+            case 'echo':
+				if (args != "") {
+                	displayOutput(args);
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+                break;
+            case 'date':
+                displayOutput(new Date().toISOString());
+                break;
+            case 'math':
+				if (args != "") {
+					if (isValidMathEquation(args)) {
+						const result = eval(args)
+						displayOutput(result);
+					} else {
+						displayOutput("That is not a valid math expression", false, true);
+					}
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+                break;
+			case 'cat':
+				const [fileHandle] = await window.showOpenFilePicker()
+				const file = await fileHandle.getFile()
+				const fileContent = await file.text()
+				if (fileContent.length > 500) {
+					displayOutput(fileContent.substring(0, 500) + " ... ")
+				} else {
+					displayOutput(fileContent)
+				}
+				break
+            case '':
+                break;
+            default:
+                displayOutput('Unknown Command', false, true);
+        }
+    } catch {
+        displayOutput("There was an error running that command", false, true);
+    }
+}
+
+function isValidMathEquation(str) {
+	const validMathEquationRegex = /^[\d\s.+\-*/]+$/;
+	return validMathEquationRegex.test(str);
+}
+
+
+function displayOutput(output, isCommand = false, isError = false) {
+	output = String(output)
+	const lines = output.split('\n');
+	lines.forEach((line, index) => {
+		const outputLine = document.createElement('div');
+		if (isError) {
+			outputLine.style.color = "#ff5555"
+		}
+		if (isCommand && index === 0) {
+			const promptSpan = document.createElement('span');
+			promptSpan.style.color = 'lime';
+			promptSpan.textContent = '$';
+			outputLine.appendChild(promptSpan);
+
+			const textNode = document.createTextNode(" " + line);
+			const yellowSpan = document.createElement('span');
+			yellowSpan.style.color = 'yellow';
+			yellowSpan.appendChild(textNode);
+			outputLine.appendChild(yellowSpan);
+		} else {
+			const textNode = document.createTextNode(line);
+			outputLine.appendChild(textNode);
+		}
+		
+		outputDiv.appendChild(outputLine);
+	});
+	terminal.scrollTop = terminal.scrollHeight;
+}
+
+function clearTerminal() {
+	outputDiv.innerHTML = ""
+}
+
 
 // TAB 3 // Window Mangager // TAB 3
 // The following code is for tab #3 (window manager)

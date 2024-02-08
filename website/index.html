@@ -544,7 +544,14 @@
 		<button class="normal" onclick="getLocation()">Get Location</button>
 		<p id="location" class="left">Press button to find location!</p>
         <hr  class="no-margin-bottom">
-        <!-- tab stuff -->
+		<fieldset>
+			<legend>command prompt</legend>
+			<div class="terminal" id="terminal">
+				<div id="output"></div>
+				<div class="prompt">$ <input type="text" id="commandInput" maxlength="43" spellcheck="false"></div>
+			</div>
+		</fieldset>
+		<hr class="no-margin-bottom ">        <!-- tab stuff -->
         <div class="tabs-container">
             <div class="center">
                 <li class="tab"><a href="#tab1" class="active" title="Unused Tab" id="tab-1">Tab 1</a></li>
@@ -594,26 +601,7 @@
 		<hr>
         <fieldset>
 		    <legend>JavaScript Code Editor</legend>
-		    <textarea class="js" id="jscode" placeholder="Write a JavaScript code snippet in here..." spellcheck="false">
-// EXAMPLE SCRIPT - RIGHT CLICK TO RUN
-const app = open("","","width=500,height=425")
-app.moveTo((window.screen.width - 500) / 2, (window.screen.height - 425) / 2)
-app.document.write(`
-<svg width="100%" height="100%">
-	<path name="square" d="M 50,50 L 150,50 L 150,150 L 50,150 Z" fill="red" stroke="black" stroke-width="5"/>
-	<path name="octagon" d="M 350,75 L 400,75 L 425,100 L 425,150 L 400,175 L 350,175 L 325,150 L 325, 100 Z" fill="skyblue" stroke="black" stroke-width="5"/>
-	<path name="triangle" d="M 200,200 L 200,300 L 300,300 Z" fill="limegreen" stroke="black" stroke-width="5"/>
-</svg>
-`)
-app.document.title = "Example Window"
-app.document.body.style.margin = "0"
-const shapes = app.document.querySelectorAll("svg path")
-shapes.forEach((shape) => {
-	shape.onclick = function() {
-		const clicked = shape.getAttribute("name")
-		app.alert("You clicked on: " + clicked)
-	}
-})</textarea>
+		    <textarea class="js" id="jscode" placeholder="Write a JavaScript code snippet in here..." spellcheck="false"></textarea>
             <div title="JavaScript Console" id="console"><p>Right click the code editor to run your code!</p></div>
         </fieldset>
         <hr>
