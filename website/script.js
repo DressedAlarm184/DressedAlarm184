@@ -995,7 +995,7 @@ async function executeCommand(commandLine) {
     try {
         switch (command) {
             case 'help':
-                displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, unix, random');
+                displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, unix, random, save, load');
                 break;
             case 'clear':
                 clearTerminal();
@@ -1052,6 +1052,17 @@ async function executeCommand(commandLine) {
 				break
 			case 'random':
 				displayOutput(Math.random())
+				break
+			case 'save':
+				if (args != "") {
+					localStorage.setItem("app.cmd.saved", args)
+					displayOutput("Text saved to localStorage...")
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+				break;
+			case 'load':
+				displayOutput(localStorage.getItem("app.cmd.saved"))
 				break
             default:
                 displayOutput('Unknown Command', false, true);
