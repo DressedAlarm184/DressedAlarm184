@@ -75,6 +75,16 @@ if (!(localStorage.getItem("app.settings.bgcolor"))) {
 
 // loads the background color from local storage
 var colorSettings = localStorage.getItem("app.settings.bgcolor")
+qs("#backgroundSelector").value = colorSettings
+
+qs("#btn55").onclick = () => {
+	changebackground(qs("#backgroundSelector").value)
+}
+
+qs("#btn56").onclick = () => {
+	qs("#backgroundSelector").value = "#333333"
+	changebackground(qs("#backgroundSelector").value)
+}
 
 var stopWatchTime = 0
 var stopWatchRunning = false
@@ -988,29 +998,29 @@ commandInput.addEventListener('keydown', function(event) {
   });
 
 async function executeCommand(commandLine) {
-    const parts = commandLine.trim().split(' ');
-    const command = parts.shift();
-    const args = parts.join(' ');
-    displayOutput(commandLine, true);
-    try {
-        switch (command) {
-            case 'help':
-                displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, unix, random, save, load');
-                break;
-            case 'clear':
-                clearTerminal();
-                break;
-            case 'echo':
+	const parts = commandLine.trim().split(' ');
+	const command = parts.shift();
+	const args = parts.join(' ');
+	displayOutput(commandLine, true);
+	try {
+		switch (command) {
+			case 'help':
+				displayOutput('Available Commands: help, clear, echo, date, math, cat, open, javascript, unix, random, save, load, alert');
+				break;
+			case 'clear':
+				clearTerminal();
+				break;
+			case 'echo':
 				if (args != "") {
-                	displayOutput(args);
+					displayOutput(args);
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
-                break;
-            case 'date':
-                displayOutput(new Date().toISOString());
-                break;
-            case 'math':
+				break;
+			case 'date':
+				displayOutput(new Date().toISOString());
+				break;
+			case 'math':
 				if (args != "") {
 					if (isValidMathEquation(args)) {
 						const result = eval(args)
@@ -1021,7 +1031,7 @@ async function executeCommand(commandLine) {
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
-                break;
+				break;
 			case 'cat':
 				const [fileHandle] = await window.showOpenFilePicker()
 				const file = await fileHandle.getFile()
@@ -1040,13 +1050,27 @@ async function executeCommand(commandLine) {
 					displayOutput("Please provide the required argument", false, true)
 				}
 				break;
-			case 'eval':
-				if (args != "") {
-                	eval(args);
+			case 'javascript':
+				if (args !== "") {
+					const originalConsoleLog = console.log;
+					console.log = function() {
+						const argsArray = Array.from(arguments);
+						const message = argsArray.join(' ');
+						displayOutput(message)	
+					};
+					try {
+						displayOutput(args, false, false, true, true);
+						const result = eval(args);
+						displayOutput((result !== undefined ? result : 'undefined'), false, false, true);
+					} catch (error) {
+						displayOutput("Error: " + error.message, false, true);
+					} finally {
+						console.log = originalConsoleLog;
+					}
 				} else {
-					displayOutput("Please provide the required argument", false, true)
+					displayOutput("Please provide the required argument", false, true);
 				}
-                break;
+				break;				
 			case 'unix':
 				displayOutput(Math.floor(new Date().getTime() / 1000))
 				break
@@ -1061,15 +1085,23 @@ async function executeCommand(commandLine) {
 					displayOutput("Please provide the required argument", false, true)
 				}
 				break;
+			case 'alert':
+				if (args != "") {
+					displayOutput("Message alerted...")
+					alert(args)
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+				break;
 			case 'load':
 				displayOutput(localStorage.getItem("app.cmd.saved"))
 				break
-            default:
-                displayOutput('Unknown Command', false, true);
-        }
-    } catch {
-        displayOutput("There was an error running that command", false, true);
-    }
+			default:
+				displayOutput('Unknown Command', false, true);
+		}
+	} catch {
+		displayOutput("There was an error running that command", false, true);
+	}
 }
 
 function isValidMathEquation(str) {
@@ -1077,13 +1109,31 @@ function isValidMathEquation(str) {
 	return validMathEquationRegex.test(str);
 }
 
-function displayOutput(output, isCommand = false, isError = false) {
+function displayOutput(output, isCommand = false, isError = false, isCode = false, isInput = false) {
 	output = String(output)
 	const lines = output.split('\n');
 	lines.forEach((line, index) => {
 		const outputLine = document.createElement('div');
 		if (isError) {
 			outputLine.style.color = "#ff5555"
+		}
+		if (isCode && isInput) {
+			const promptSpan = document.createElement('span');
+			promptSpan.style.color = 'pink';
+			promptSpan.textContent = '>';
+			outputLine.appendChild(promptSpan);
+		} else if (isCode && !isInput) {
+			const promptSpan = document.createElement('span');
+			promptSpan.style.color = 'pink';
+			promptSpan.textContent = '<';
+			outputLine.appendChild(promptSpan);
+		}
+		if (isCode) {
+			const textNode = document.createTextNode(" " + line);
+			const yellowSpan = document.createElement('span');
+			yellowSpan.style.color = 'skyblue';
+			yellowSpan.appendChild(textNode);
+			outputLine.appendChild(yellowSpan);
 		}
 		if (isCommand && index === 0) {
 			const promptSpan = document.createElement('span');
@@ -1096,7 +1146,7 @@ function displayOutput(output, isCommand = false, isError = false) {
 			yellowSpan.style.color = 'yellow';
 			yellowSpan.appendChild(textNode);
 			outputLine.appendChild(yellowSpan);
-		} else {
+		} else if (!isCode) {
 			const textNode = document.createTextNode(line);
 			outputLine.appendChild(textNode);
 		}
