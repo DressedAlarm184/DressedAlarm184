@@ -968,10 +968,24 @@ terminal.addEventListener('click', function() {
 commandInput.addEventListener('keydown', function(event) {
 	if (event.key === 'Enter') {
 		const command = commandInput.value;
-		executeCommand(command);
-		commandInput.value = '';
+		if (command != "") {
+			executeCommand(command);
+			commandInput.value = '';
+		}
 	}
 });
+
+commandInput.addEventListener('keydown', function(event) {
+	// Disable arrow keys
+	if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+	  event.preventDefault();
+	}
+
+	// Disable Ctrl + C, Ctrl + V, and Ctrl + A
+	if (event.ctrlKey && (event.key === 'c' || event.key === 'v' || event.key === 'a')) {
+	  event.preventDefault();
+	}
+  });
 
 async function executeCommand(commandLine) {
     const parts = commandLine.trim().split(' ');
@@ -981,7 +995,7 @@ async function executeCommand(commandLine) {
     try {
         switch (command) {
             case 'help':
-                displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval');
+                displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, unix, random');
                 break;
             case 'clear':
                 clearTerminal();
@@ -1033,8 +1047,12 @@ async function executeCommand(commandLine) {
 					displayOutput("Please provide the required argument", false, true)
 				}
                 break;
-            case '':
-                break;
+			case 'unix':
+				displayOutput(Math.floor(new Date().getTime() / 1000))
+				break
+			case 'random':
+				displayOutput(Math.random())
+				break
             default:
                 displayOutput('Unknown Command', false, true);
         }
@@ -1075,21 +1093,44 @@ function displayOutput(output, isCommand = false, isError = false) {
 		outputDiv.appendChild(outputLine);
 	});
 	terminal.scrollTop = terminal.scrollHeight;
-	if (output == "") {
-		const brElement = document.createElement('br');
-		outputDiv.appendChild(brElement);
-		terminal.scrollTop = terminal.scrollHeight;		
-	}
 }
 
 function clearTerminal() {
 	outputDiv.innerHTML = ""
 }
 
-displayOutput("Welcome to the Command Prompt!")
-displayOutput("Type 'help' for a list of commands.")
-displayOutput("")
+{
+	const input = document.getElementById('commandInput');
+    const caret = document.querySelector('.caret');
 
+    input.addEventListener('input', function() {
+      updateCaretPosition();
+    });
+
+    input.addEventListener('keydown', function() {
+      setTimeout(updateCaretPosition);
+    });
+
+    function updateCaretPosition() {
+      const inputRect = input.getBoundingClientRect();
+      const inputStyle = window.getComputedStyle(input);
+      
+      // Calculate caret position based on the text width
+      const textWidth = getTextWidth(input.value, inputStyle.font);
+      caret.style.left = textWidth + 12 + 'px';
+    }
+
+    // Function to calculate the width of the text
+    function getTextWidth(text, font) {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      context.font = font;
+      const width = context.measureText(text).width;
+      return width;
+    }
+
+    updateCaretPosition()
+}
 // TAB 3 // Window Mangager // TAB 3
 // The following code is for tab #3 (window manager)
 

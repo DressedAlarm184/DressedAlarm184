@@ -302,7 +302,7 @@ body {
 	width: 450px;
 	padding: 16px;
 	overflow-y: scroll;
-	font-size: 16px;
+	font-size: 18px;
 	font-family: "Source Code Pro";
 	margin: 10px;
 	overflow-wrap: break-word;
@@ -315,6 +315,7 @@ body {
 
 .prompt {
 	color: lime;
+	height: 25px;
 }
 
 .prompt input {
@@ -323,13 +324,29 @@ body {
 	outline: none;
 	color: #ffffff;
 	width: calc(100% - 30px);
-	font-size: 16px;
+	font-size: 18px;
 	color: yellow;
-	caret-color: red;
 	pointer-events: none;
 	font-weight: bold;
 	position: relative;
 	right: 2px;
+	caret-color: transparent;
+}
+
+.prompt input:focus + .caret {
+	background: red;
+}
+
+.caret {
+	position: relative;
+	transform: translateY(-50%);
+	width: 10px;
+	height: 20px;
+	background-color: rgb(184, 0, 0);
+	pointer-events: none;
+	display: inline-block;
+	transform: translateY(calc(-100% + -2px)) translateX(11px);
+	transition: background-color 200ms;
 }
 
 .terminal #output div {
@@ -471,6 +488,7 @@ legend {
   text-align: center;
   background-color: skyblue;
   padding-inline: 5px;
+  font-size: 18px;
 }
 
 input[type="checkbox"].command2:checked {
@@ -575,11 +593,11 @@ button.openbtn {
 }
 
 #header {
-  margin: 15px;
+  margin: 12px;
   text-align: center;
   position: relative;
   top: 2px;
-  font-size: 25px;
+  font-size: 28px;
 }
 
 @keyframes spin {
