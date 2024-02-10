@@ -431,6 +431,10 @@ label {
   overflow: auto;
 }
 
+main.dim {
+	filter: brightness(0.7);
+}
+
 #console p {
   margin: 0px;
   padding: 0px;
@@ -467,6 +471,7 @@ main {
   scrollbar-width: none;
   background: #0099ff;
   zoom: 80%;
+  transition: filter 500ms;
 }
 
 input[type="checkbox"].command2 {

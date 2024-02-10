@@ -753,7 +753,9 @@ document.getElementById("btn4").onclick = function() {
     popupBox(document.querySelector("#popupBox").value)
 }
 
-var dkmode = false
+qs("#btn3").onclick = () => {
+	qs("main").classList.toggle('dim');
+}
 
 async function importNotes() { // imports text into text editor from a local file //
   try {
@@ -783,23 +785,42 @@ document.getElementById("btn17").onclick = function() { // deleting files //
 }
 
 qs("#btn36").onclick = function() {
-	fetch("https://api.github.com/repos/DressedAlarm184/DressedAlarm184/issues")
-        .then(response => response.json())
+    fetch("https://api.github.com/repos/DressedAlarm184/DressedAlarm184/issues")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-			const newWindow = open("","Website Issues","width=600,height=350")
-            data.forEach(function(issue, index) {
-                newWindow.document.write(`${issue.title} (#${issue.number})<br>`);
-				newWindow.document.write(`${(issue.body).replace("\n","<br>")}`)
-				if (index != data.length - 1) {
-					newWindow.document.write(`<hr>`)
-				}
-				newWindow.document.title = `${newWindow.name}`
-            });
+            const newWindow = open("", "Website Issues", "width=600,height=350");
+            if (newWindow) {
+                data.forEach(function(issue, index) {
+                    const sanitizedBody = escapeHtml(issue.body); // Sanitize HTML content
+                    newWindow.document.write(`${issue.title} (#${issue.number})<br>`);
+                    newWindow.document.write(`${sanitizedBody.replace(/\n/g, "<br>")}`);
+                    newWindow.document.write(`<hr>`);
+                });
+				newWindow.document.write('<a href="javascript:window.close()">Close Window</a>')
+                newWindow.document.title = "Website Issues";
+            } else {
+                throw new Error('Failed to open new window');
+            }
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
 }
+
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+}
+
 
 qs("#btn54").onclick = function() { // renaming files // 
 	var oldFilename = prompt("Enter the current name of the file (without .txt)")
@@ -970,6 +991,8 @@ tabsContainter.addEventListener("click", (e) => { // changes the active tab
 const terminal = document.getElementById('terminal');
 const commandInput = document.getElementById('commandInput');
 const outputDiv = document.getElementById('output');
+let commandHistory = [];
+let historyIndex = -1;
 
 terminal.addEventListener('click', function() {
 	commandInput.focus();
@@ -977,21 +1000,35 @@ terminal.addEventListener('click', function() {
 
 commandInput.addEventListener('keydown', function(event) {
 	if (event.key === 'Enter') {
-		const command = commandInput.value;
-		if (command != "") {
+		const command = commandInput.value.trim();
+		if (command !== "") {
+			commandHistory.push(command);
+			historyIndex = commandHistory.length;
 			executeCommand(command);
 			commandInput.value = '';
 		}
+	} else if (event.key === 'ArrowUp') {
+		if (historyIndex > 0) {
+			historyIndex--;
+			commandInput.value = commandHistory[historyIndex];
+		}
+		event.preventDefault();
+	} else if (event.key === 'ArrowDown') {
+		if (historyIndex < commandHistory.length - 1) {
+			historyIndex++;
+			commandInput.value = commandHistory[historyIndex];
+		} else if (historyIndex === commandHistory.length - 1) {
+			historyIndex++;
+			commandInput.value = '';
+		}
+		event.preventDefault();
 	}
 });
 
 commandInput.addEventListener('keydown', function(event) {
-	// Disable arrow keys
-	if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+	if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
 	  event.preventDefault();
 	}
-
-	// Disable Ctrl + C, Ctrl + V, and Ctrl + A
 	if (event.ctrlKey && (event.key === 'c' || event.key === 'v' || event.key === 'a')) {
 	  event.preventDefault();
 	}
@@ -1175,13 +1212,10 @@ function clearTerminal() {
     function updateCaretPosition() {
       const inputRect = input.getBoundingClientRect();
       const inputStyle = window.getComputedStyle(input);
-      
-      // Calculate caret position based on the text width
-      const textWidth = getTextWidth(input.value, inputStyle.font);
+            const textWidth = getTextWidth(input.value, inputStyle.font);
       caret.style.left = textWidth + 12 + 'px';
     }
 
-    // Function to calculate the width of the text
     function getTextWidth(text, font) {
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
@@ -1189,7 +1223,6 @@ function clearTerminal() {
       const width = context.measureText(text).width;
       return width;
     }
-
     updateCaretPosition()
 }
 // TAB 3 // Window Mangager // TAB 3
