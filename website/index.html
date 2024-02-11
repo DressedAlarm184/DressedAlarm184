@@ -7,7 +7,6 @@
 	<meta charset="utf-8">
 	<meta name="description" content="This is a very useful application">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="styles.css">
     <meta http-equiv="Cache-Control" content="max-age=1, must-revalidate">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
@@ -15,8 +14,16 @@
 <body>
 	<div id="resize">0 &times; 0</div>
 	<noscript>
-		<p style="color:red">Please enable JavaScript in browser settings!</p>
-    </noscript>
+		<p class="noscript-message">This website requires javascript to work properly!<br>Please use a newer browser or enable scripting.</p>
+		<style>
+			*:not(html,body,noscript,br,.noscript-message) {
+				display: none;
+			}
+			noscript {
+				font-size: 24px;
+			}
+		</style>
+	</noscript>
 	<main id="content">
 		<h1 id="header">My Computer (v2)</h1>
 		<hr>

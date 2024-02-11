@@ -5,6 +5,13 @@ window.onerror = function(error) {
     popupBox(error)
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+	var cssLink = document.createElement('link');
+	cssLink.rel = 'stylesheet';
+	cssLink.href = 'styles.css';
+	document.head.appendChild(cssLink);
+});
+
 function loadProj(id) { // load project
     document.getElementById("iframe").src = "https://turbowarp.org/" + id + "/embed?hqpen"
 }
@@ -1214,6 +1221,8 @@ function clearTerminal() {
 	outputDiv.innerHTML = ""
 }
 
+
+// code block // Custom Caret for the 'Command Prompt'
 {
 	const input = document.getElementById('commandInput');
     const caret = document.querySelector('.caret');
