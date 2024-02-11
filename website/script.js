@@ -5,6 +5,7 @@ window.onerror = function(error) {
     popupBox(error)
 }
 
+// load css
 document.addEventListener('DOMContentLoaded', function() {
 	var cssLink = document.createElement('link');
 	cssLink.rel = 'stylesheet';
@@ -995,6 +996,7 @@ tabsContainter.addEventListener("click", (e) => { // changes the active tab
     clickedTab.classList.add("active")
 })
 
+// terminal code
 const terminal = document.getElementById('terminal');
 const commandInput = document.getElementById('commandInput');
 const outputDiv = document.getElementById('output');
@@ -1042,14 +1044,42 @@ commandInput.addEventListener('keydown', function(event) {
 	}
   });
 
+let lastRead = "undefined"
 async function executeCommand(commandLine) {
 	const parts = commandLine.trim().split(' ');
 	const command = parts.shift();
-	const args = parts.join(' ');
+	const params = parts.join(' ');
+	const args = params
+	.replace(/\$READ/g, lastRead)
+	.replace(/\$RANDOM/g, Math.random())
+	.replace(/\$TIME/g, Math.floor(new Date().getTime() / 1000))
+	.replace(/\$DATE/g, new Date().toISOString())
 	try {
 		switch (command) {
 			case 'help':
-				displayOutput('Available Commands: help, clear, echo, date, math, cat, open, javascript, unix, random, save, load, alert, runscript');
+				if (args == "") {
+					displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, time, random, save, load, alert, script, read, vars, get, reload');
+				} else {
+					displayOutput(args + ": " + {
+						"clear": "Clears the terminal screen.",
+						"echo": "Displays a message on the terminal",
+						"date": "Displays the current date and time",
+						"math": "Performs a mathematical calculation",
+						"cat": "Displays the contents of a file",
+						"open": "Opens a provided website in a new tab",
+						"eval": "Evaluates a JavaScript expressio.",
+						"time": "Displays the current Unix timestamp",
+						"random": "Generates a random number between 0 and 1",
+						"save": "Saves provided text to local storage",
+						"load": "Retrieves text saved in local storage",
+						"alert": "Displays an alert with a provided message",
+						"script": "Allows execution of multiple commands from a script",
+						"read": "Prompts the user for input and stores it in $READ",
+						"help": "Lists commands and their functions",
+						"vars": "Displays available variables",
+						"get": "Retreives the last entered user input from 'read'",
+						"reload": "Reloads the application"
+					}[args])}
 				break;
 			case 'clear':
 				clearTerminal();
@@ -1062,7 +1092,7 @@ async function executeCommand(commandLine) {
 				}
 				break;
 			case 'date':
-				displayOutput(new Date().toISOString());
+				executeCommand("echo $DATE")
 				break;
 			case 'math':
 				if (args != "") {
@@ -1094,7 +1124,7 @@ async function executeCommand(commandLine) {
 					displayOutput("Please provide the required argument", false, true)
 				}
 				break;
-			case 'javascript':
+			case 'eval':
 				if (args !== "") {
 					const originalConsoleLog = console.log;
 					console.log = function() {
@@ -1115,11 +1145,11 @@ async function executeCommand(commandLine) {
 					displayOutput("Please provide the required argument", false, true);
 				}
 				break;				
-			case 'unix':
-				displayOutput(Math.floor(new Date().getTime() / 1000))
+			case 'time':
+				executeCommand("echo $TIME")
 				break
 			case 'random':
-				displayOutput(Math.random())
+				executeCommand("echo $RANDOM")
 				break
 			case 'save':
 				if (args != "") {
@@ -1140,10 +1170,30 @@ async function executeCommand(commandLine) {
 			case 'load':
 				displayOutput(localStorage.getItem("app.cmd.saved"))
 				break
-			case 'runscript':
+			case 'script':
 				qs("#multicommands").showModal()
 				setTimeout(()=>{qs("#multicommands-input").value = ""},10)
 				break;
+			case 'read':
+				if (args != "") {
+					lastRead = prompt(args)
+					displayOutput("User input saved to $READ...")
+					if (lastRead == "" || lastRead == null) {
+						lastRead = "undefined"
+					}
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+			case 'vars':
+				displayOutput("Available Variables: $READ, $RANDOM, $TIME, $DATE")
+				break;	
+			case 'get':
+				executeCommand("echo $READ")
+				break
+			case 'reload':
+				displayOutput("Reloading...")
+				location.reload()
+				break
 			case '':
 				break
 			default:
