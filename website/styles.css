@@ -435,6 +435,13 @@ main.dim {
 	filter: brightness(0.7);
 }
 
+#multicommands-input {
+	width: 200px;
+	height: 120px;
+	transform: translateX(-10px);
+	white-space: nowrap;
+}
+
 #console p {
   margin: 0px;
   padding: 0px;

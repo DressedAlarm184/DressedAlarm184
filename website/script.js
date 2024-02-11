@@ -1004,6 +1004,7 @@ commandInput.addEventListener('keydown', function(event) {
 		if (command !== "") {
 			commandHistory.push(command);
 			historyIndex = commandHistory.length;
+			displayOutput(command, true);
 			executeCommand(command);
 			commandInput.value = '';
 		}
@@ -1038,11 +1039,10 @@ async function executeCommand(commandLine) {
 	const parts = commandLine.trim().split(' ');
 	const command = parts.shift();
 	const args = parts.join(' ');
-	displayOutput(commandLine, true);
 	try {
 		switch (command) {
 			case 'help':
-				displayOutput('Available Commands: help, clear, echo, date, math, cat, open, javascript, unix, random, save, load, alert');
+				displayOutput('Available Commands: help, clear, echo, date, math, cat, open, javascript, unix, random, save, load, alert, runscript');
 				break;
 			case 'clear':
 				clearTerminal();
@@ -1133,11 +1133,28 @@ async function executeCommand(commandLine) {
 			case 'load':
 				displayOutput(localStorage.getItem("app.cmd.saved"))
 				break
+			case 'runscript':
+				qs("#multicommands").showModal()
+				setTimeout(()=>{qs("#multicommands-input").value = ""},10)
+				break;
+			case '':
+				break
 			default:
 				displayOutput('Unknown Command', false, true);
 		}
 	} catch {
 		displayOutput("There was an error running that command", false, true);
+	}
+}
+
+{
+	qs("#multicommands-button").onclick = () => {
+		const textarea = document.getElementById('multicommands-input');
+		const lines = textarea.value.split('\n');
+		lines.forEach(line => {
+			executeCommand(line.trim());
+		});
+		qs('#multicommands').close()
 	}
 }
 

@@ -644,6 +644,15 @@
             <div id="custompopupBoxMessage"></div>
             <button style="text-align:center" id="closeAlert" onclick="closeCustompopupBox()">CLOSE</button>
         </dialog>
+
+		<dialog id="multicommands">
+			<textarea id="multicommands-input" placeholder="Write a script..."></textarea>
+			<br>
+			<div class="equal-width-2">
+				<button id="multicommands-button">Run</button>
+				<button id="multicommands-close" onclick="qs('#multicommands').close()"  spellcheck="false">Close</button>
+			</div>
+		</dialog>
 	</main>
     <div id="notif">This is a <br> test notif</div>
 	<script src="script.js"></script>
