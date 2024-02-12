@@ -803,13 +803,18 @@ qs("#btn36").onclick = function() {
         .then(data => {
             const newWindow = open("", "Website Issues", "width=600,height=350");
             if (newWindow) {
-                data.forEach(function(issue, index) {
-                    const sanitizedBody = escapeHtml(issue.body); // Sanitize HTML content
+				newWindow.document.write('<a href="javascript:window.close()">Close Window</a>')
+				newWindow.document.write("<br>")
+				newWindow.document.write(`<a href="javascript:open('https://github.com/DressedAlarm184/DressedAlarm184/issues/new/choose')">Submit New Issue</a>`)
+                newWindow.document.write("<hr>")
+				data.forEach(function(issue, index) {
+                    const sanitizedBody = escapeHtml(issue.body);
                     newWindow.document.write(`${issue.title} (#${issue.number})<br>`);
                     newWindow.document.write(`${sanitizedBody.replace(/\n/g, "<br>")}`);
-                    newWindow.document.write(`<hr>`);
+                    if (index != data.length - 1) {
+						newWindow.document.write(`<hr>`);
+					}
                 });
-				newWindow.document.write('<a href="javascript:window.close()">Close Window</a>')
                 newWindow.document.title = "Website Issues";
             } else {
                 throw new Error('Failed to open new window');
@@ -960,40 +965,6 @@ textareas.forEach(function (textarea) {
       textarea.selectionStart = textarea.selectionEnd = cursorPos + 1
     }
   })
-})
-
-// MAIN TAB SETUP // MAIN TAB SETUP //
-// -------------------------------- //
-// FOLLOWING CODE IS FOR THE TABS   //
-
-const tabsContainter = document.querySelector(".tabs-container")
-const tabsList = tabsContainter.querySelector("div.center")
-const tabButtons = tabsList.querySelectorAll("a")
-const tabPanels = tabsContainter.querySelectorAll(".tab__panels > div")
-
-tabButtons.forEach((tab,index) => { 
-    if (index !== 0) { // hides the other panels that are not selected
-        tabPanels[index].setAttribute("hidden","")
-    }
-})
-
-tabsContainter.addEventListener("click", (e) => { // changes the active tab
-    const clickedTab = e.target.closest("a")
-    if (!clickedTab) return
-    e.preventDefault()
-    const activePanelId = clickedTab.getAttribute("href")
-    const activePanel = tabsContainter.querySelector(activePanelId)
-    
-    tabPanels.forEach((panel) => {
-        panel.setAttribute("hidden","")
-    })
-
-    tabButtons.forEach((button) => {
-        button.classList.remove("active")
-    })
-
-    activePanel.removeAttribute("hidden")
-    clickedTab.classList.add("active")
 })
 
 // terminal code
@@ -1184,6 +1155,7 @@ async function executeCommand(commandLine) {
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
+				break
 			case 'vars':
 				displayOutput("Available Variables: $READ, $RANDOM, $TIME, $DATE")
 				break;	
@@ -1301,13 +1273,10 @@ function clearTerminal() {
     }
     updateCaretPosition()
 }
-// TAB 3 // Window Mangager // TAB 3
-// The following code is for tab #3 (window manager)
 
 let windowManagerApp = null;
 function newWindowManagerWindow() {
 	windowManagerApp = open("","","width=475,height=350")
-	windowManagerApp.moveTo((window.screen.width - 475) / 2, (window.screen.height - 350) / 2);
 	let h1 = windowManagerApp.document.createElement("h1")
 	let p = windowManagerApp.document.createElement("p")
 
@@ -1318,7 +1287,7 @@ function newWindowManagerWindow() {
 	h1.style.textDecorationColor = "red"
 	h1.style.fontSize = "32px"
 
-	p.textContent = qs("#windowText").value
+	p.innerHTML = escapeHtml(qs("#windowText").value).replace(/\\n/g,"<br>")
 	p.style.fontSize = "24px"
 	p.style.fontWeight = "bold"
 	
@@ -1344,7 +1313,6 @@ function newWindowManagerWindow() {
 		btn.style.paddingInline = "10px"
 		btn.style.paddingBlock = "7px"
 		btn.style.borderRadius = "10px"
-		windowManagerApp.document.body.appendChild(btn)
 		if (!(qs("#windowMessage").value == "")) {
 			btn.onclick = function() {
 				windowManagerApp.window.alert(qs("#windowMessage").value)
@@ -1372,4 +1340,3 @@ function returnWindowMangagerValueString() {
 	let result5 = `Message: ${qs("#windowMessage").value}`
 	return result1+result2+result3+result4+result5
 }
-// end of tab 3 code

@@ -559,54 +559,33 @@
  			</div>
 			</div>
 		</fieldset>
-		<hr class="no-margin-bottom ">        <!-- tab stuff -->
-        <div class="tabs-container">
-            <div class="center">
-                <li class="tab"><a href="#tab1" class="active" title="Unused Tab" id="tab-1">Tab 1</a></li>
-                <li class="tab"><a href="#tab2" id="tab-2" title="Unused Tab">Tab 2</a></li>
-                <li class="tab"><a href="#tab3" id="tab-3" title="Window Manager">Tab 3</a></li>
-                <li class="tab"><a href="#tab4" id="tab-4" title="Unused Tab">Tab 4</a></li>
-            </div>
-    		<div class="tab__panels">
-<div id="tab1">
-    <p>Tab 1</p>
-</div>
-
-<div id="tab2">
-    <p>Tab 2</p>
-</div>
-
-<div id="tab3">
-    <h2>Window Manager</h2>
-    <button onclick="newWindowManagerWindow()">Open New Window</button>
-    <button onclick="saveWindowManagerSettings()">Save Window Settings</button>
-    <br>
-    <label for="windowTitle">Title:</label>
-    <input placeholder="(default)" id="windowTitle">
-    <br>
-    <label for="windowHeading">Heading:</label>
-    <input placeholder="(none)" id="windowHeading">
-    <br>
-    <label for="windowText">Text:</label>
-    <input placeholder="(none)" id="windowText">
-    <br>
-    <label for="windowButton">Button:</label>
-    <input placeholder="(leave empty for no button)" id="windowButton">
-    <br>
-    <label for="windowMessage">Message:</label>
-    <input placeholder="(leave empty for no message)" id="windowMessage">
-</div>
-
-<div id="tab4">
-    <p>Tab 4</p>
-</div>
-    		</div>
+		<div id="windowmanger">
+			<hr>
+			<h2>Window Manager</h2>
+			<div class="equal-width-2 space-around">
+				<button onclick="newWindowManagerWindow()">Open New Window</button>
+				<button onclick="saveWindowManagerSettings()">Save Window Settings</button>
+			</div>
+			<label for="windowTitle">Title:</label>
+			<input placeholder="(default)" id="windowTitle">
+			<br>
+			<label for="windowHeading">Heading:</label>
+			<input placeholder="(none)" id="windowHeading">
+			<br>
+			<label for="windowText">Text:</label>
+			<input placeholder="(none)" id="windowText">
+			<br>
+			<label for="windowButton">Button:</label>
+			<input placeholder="(leave empty for no button)" id="windowButton">
+			<br>
+			<label for="windowMessage">Message:</label>
+			<input placeholder="(leave empty for no message)" id="windowMessage">
+			<hr>
+			<button class="normal" id="btn11">Change Box</button>
+			<hr>
+			<div id="box"><p id="boxtext"></p></div>
+			<hr>
 		</div>
-		<hr>
-		<button class="normal" id="btn11">Change Box</button>
-		<hr>
-		<div id="box"><p id="boxtext"></p></div>
-		<hr>
         <fieldset>
 		    <legend>JavaScript Code Editor</legend>
 		    <textarea class="js" id="jscode" placeholder="Write a JavaScript code snippet in here..." spellcheck="false"></textarea>
