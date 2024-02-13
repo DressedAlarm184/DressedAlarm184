@@ -295,7 +295,7 @@ body {
 	display: none;
 }
 
-.terminal {
+.terminal{
 	height: 300px;
 	background-color: #2e2e2e;
 	border-radius: 15px;
@@ -307,10 +307,12 @@ body {
 	margin: 10px;
 	overflow-wrap: break-word;
 	margin-inline: auto;
+	cursor: url("cursor2.cur"), auto;
 }
 
 .terminal * {
 	font-family: "Source Code Pro" !important;
+	cursor: url("cursor2.cur"), auto;
 }
 
 .prompt {

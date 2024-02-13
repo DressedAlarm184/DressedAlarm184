@@ -1015,21 +1015,26 @@ commandInput.addEventListener('keydown', function(event) {
 	}
   });
 
+let CommandAliases = {}
 let lastRead = "undefined"
+let lastAlias = undefined;
+let lastMath = "undefined"
 async function executeCommand(commandLine) {
 	const parts = commandLine.trim().split(' ');
 	const command = parts.shift();
-	const params = parts.join(' ');
-	const args = params
+	const raw = parts.join(' ');
+	const args = raw
 	.replace(/\$READ/g, lastRead)
 	.replace(/\$RANDOM/g, Math.random())
 	.replace(/\$TIME/g, Math.floor(new Date().getTime() / 1000))
 	.replace(/\$DATE/g, new Date().toISOString())
+	.replace(/\$SAVED/g, localStorage.getItem("app.cmd.saved"))
+	.replace(/\$RESULT/g, lastMath)
 	try {
 		switch (command) {
 			case 'help':
 				if (args == "") {
-					displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, time, random, save, load, alert, script, read, vars, get, reload');
+					displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, time, random, save, load, alert, script, read, vars, get, reload, window, alias, def, list, execute');
 				} else {
 					displayOutput(args + ": " + {
 						"clear": "Clears the terminal screen.",
@@ -1038,7 +1043,7 @@ async function executeCommand(commandLine) {
 						"math": "Performs a mathematical calculation",
 						"cat": "Displays the contents of a file",
 						"open": "Opens a provided website in a new tab",
-						"eval": "Evaluates a JavaScript expressio.",
+						"eval": "Evaluates a JavaScript expression.",
 						"time": "Displays the current Unix timestamp",
 						"random": "Generates a random number between 0 and 1",
 						"save": "Saves provided text to local storage",
@@ -1049,7 +1054,12 @@ async function executeCommand(commandLine) {
 						"help": "Lists commands and their functions",
 						"vars": "Displays available variables",
 						"get": "Retreives the last entered user input from 'read'",
-						"reload": "Reloads the application"
+						"reload": "Reloads the application",
+						"window": "Creates a new window with provided text",
+						"alias": "Setups an alias for defining",
+						"def": "define a custom alias selected with 'alias'",
+						"list": "lists all available aliases",
+						"execute": "executes the command in the provided alias"
 					}[args])}
 				break;
 			case 'clear':
@@ -1070,6 +1080,7 @@ async function executeCommand(commandLine) {
 					if (isValidMathEquation(args)) {
 						const result = eval(args)
 						displayOutput(result);
+						lastMath = result
 					} else {
 						displayOutput("That is not a valid math expression", false, true);
 					}
@@ -1104,7 +1115,7 @@ async function executeCommand(commandLine) {
 						displayOutput(message)	
 					};
 					try {
-						displayOutput(args, false, false, true, true);
+						displayOutput(raw, false, false, true, true);
 						const result = eval(args);
 						displayOutput((result !== undefined ? result : 'undefined'), false, false, true);
 					} catch (error) {
@@ -1139,7 +1150,7 @@ async function executeCommand(commandLine) {
 				}
 				break;
 			case 'load':
-				displayOutput(localStorage.getItem("app.cmd.saved"))
+				executeCommand("echo $SAVED")
 				break
 			case 'script':
 				qs("#multicommands").showModal()
@@ -1157,7 +1168,7 @@ async function executeCommand(commandLine) {
 				}
 				break
 			case 'vars':
-				displayOutput("Available Variables: $READ, $RANDOM, $TIME, $DATE")
+				displayOutput("Available Variables: $READ, $RANDOM, $TIME, $DATE, $SAVED, $RESULT")
 				break;	
 			case 'get':
 				executeCommand("echo $READ")
@@ -1165,6 +1176,53 @@ async function executeCommand(commandLine) {
 			case 'reload':
 				displayOutput("Reloading...")
 				location.reload()
+				break
+			case 'window':
+				if (args != "") {
+					const opened = open("","","width=400,height=250")
+					opened.document.body.innerHTML = `
+						${escapeHtml(args).replace(/\\n/g,"<br>")}
+						<br>
+						<a href="javascript:window.close()">Close Window</a>
+					`
+					opened.document.body.style.fontSize = "20px"
+					opened.document.title = "Command Prompt Window"
+					displayOutput("Window created...")
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+				break
+			case 'alias':
+				if (args != "") {
+					lastAlias = args
+					displayOutput("Alias setup for defining...")
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+				break
+			case 'def':
+				if (args != "") {
+					if (lastAlias) {
+						CommandAliases[lastAlias] = args
+						displayOutput("Alias defined...")
+					} else {
+						displayOutput("Alias not setup for defining yet", false, true)
+					}
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
+				break
+			case 'list':
+				for (var key in CommandAliases) {
+					displayOutput(key + ": " + CommandAliases[key])
+				}
+				break
+			case 'execute': 
+				if (args != "") {
+					executeCommand(CommandAliases[args])
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
 				break
 			case '':
 				break
