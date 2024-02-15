@@ -664,10 +664,6 @@ qs("#btn37").onclick = function() {
     notif("Click Count:<br>" + clicks)
 }
 
-if(!(localStorage.getItem("app.settings.togglebg"))) {
-	localStorage.setItem("app.settings.togglebg", "no")
-}
-
 document.getElementById("btn15").onclick = function() { // search modal //
     document.querySelector("#gsearch").showModal()
 }
@@ -1015,10 +1011,18 @@ commandInput.addEventListener('keydown', function(event) {
 	}
   });
 
-let CommandAliases = {}
+function saveTerminalData() {
+	localStorage.setItem("app.cmd.alias",JSON.stringify(CommandAliases))
+	localStorage.setItem("app.cmd.filesys",JSON.stringify(TerminalFiles))
+}
+
+let CommandAliases = JSON.parse(localStorage.getItem("app.cmd.alias")) || {};
+let TerminalFiles = JSON.parse(localStorage.getItem("app.cmd.filesys")) || {};
 let lastRead = "undefined"
-let lastAlias = undefined;
+let lastSelect = undefined;
 let lastMath = "undefined"
+let lastOpen = "undefined"
+setInterval(saveTerminalData,5000) // terminal data is saved before unload (window.onbeforeunload) somewhere else in the javascript file but interval is here as an 'autosave'
 async function executeCommand(commandLine) {
 	const parts = commandLine.trim().split(' ');
 	const command = parts.shift();
@@ -1028,13 +1032,13 @@ async function executeCommand(commandLine) {
 	.replace(/\$RANDOM/g, Math.random())
 	.replace(/\$TIME/g, Math.floor(new Date().getTime() / 1000))
 	.replace(/\$DATE/g, new Date().toISOString())
-	.replace(/\$SAVED/g, localStorage.getItem("app.cmd.saved"))
+	.replace(/\$FILE/g, lastOpen)
 	.replace(/\$RESULT/g, lastMath)
 	try {
 		switch (command) {
 			case 'help':
 				if (args == "") {
-					displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, time, random, save, load, alert, script, read, vars, get, reload, window, alias, def, list, execute');
+					displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, time, random, alert, script, read, vars, get, reload, window, select, def, list, exec, ls, edit, view, rm, del');
 				} else {
 					displayOutput(args + ": " + {
 						"clear": "Clears the terminal screen.",
@@ -1046,8 +1050,6 @@ async function executeCommand(commandLine) {
 						"eval": "Evaluates a JavaScript expression.",
 						"time": "Displays the current Unix timestamp",
 						"random": "Generates a random number between 0 and 1",
-						"save": "Saves provided text to local storage",
-						"load": "Retrieves text saved in local storage",
 						"alert": "Displays an alert with a provided message",
 						"script": "Allows execution of multiple commands from a script",
 						"read": "Prompts the user for input and stores it in $READ",
@@ -1056,10 +1058,15 @@ async function executeCommand(commandLine) {
 						"get": "Retreives the last entered user input from 'read'",
 						"reload": "Reloads the application",
 						"window": "Creates a new window with provided text",
-						"alias": "Setups an alias for defining",
-						"def": "define a custom alias selected with 'alias'",
+						"select": "Selects something for later use in commands",
+						"def": "define a custom alias selected with 'select'",
 						"list": "lists all available aliases",
-						"execute": "executes the command in the provided alias"
+						"exec": "executes the command in the provided alias",
+						"ls": "lists all available files",
+						"view": "Gets the contents of a file",
+						"edit": "Edits a file or creates a new one",
+						"rm": "delete the specified file",
+						"del": "deletes the provided alias"
 					}[args])}
 				break;
 			case 'clear':
@@ -1089,14 +1096,8 @@ async function executeCommand(commandLine) {
 				}
 				break;
 			case 'cat':
-				const [fileHandle] = await window.showOpenFilePicker()
-				const file = await fileHandle.getFile()
-				const fileContent = await file.text()
-				if (fileContent.length > 500) {
-					displayOutput(fileContent.substring(0, 500) + " ... ")
-				} else {
-					displayOutput(fileContent)
-				}
+				executeCommand("view " + args)
+				executeCommand("echo $FILE")
 				break
 			case 'open':
 				if (args != "") {
@@ -1133,14 +1134,6 @@ async function executeCommand(commandLine) {
 			case 'random':
 				executeCommand("echo $RANDOM")
 				break
-			case 'save':
-				if (args != "") {
-					localStorage.setItem("app.cmd.saved", args)
-					displayOutput("Text saved to localStorage...")
-				} else {
-					displayOutput("Please provide the required argument", false, true)
-				}
-				break;
 			case 'alert':
 				if (args != "") {
 					displayOutput("Message alerted...")
@@ -1149,9 +1142,6 @@ async function executeCommand(commandLine) {
 					displayOutput("Please provide the required argument", false, true)
 				}
 				break;
-			case 'load':
-				executeCommand("echo $SAVED")
-				break
 			case 'script':
 				qs("#multicommands").showModal()
 				setTimeout(()=>{qs("#multicommands-input").value = ""},10)
@@ -1159,7 +1149,6 @@ async function executeCommand(commandLine) {
 			case 'read':
 				if (args != "") {
 					lastRead = prompt(args)
-					displayOutput("User input saved to $READ...")
 					if (lastRead == "" || lastRead == null) {
 						lastRead = "undefined"
 					}
@@ -1168,7 +1157,7 @@ async function executeCommand(commandLine) {
 				}
 				break
 			case 'vars':
-				displayOutput("Available Variables: $READ, $RANDOM, $TIME, $DATE, $SAVED, $RESULT")
+				displayOutput("Available Variables: $READ, $RANDOM, $TIME, $DATE, $FILE, $RESULT")
 				break;	
 			case 'get':
 				executeCommand("echo $READ")
@@ -1187,24 +1176,21 @@ async function executeCommand(commandLine) {
 					`
 					opened.document.body.style.fontSize = "20px"
 					opened.document.title = "Command Prompt Window"
-					displayOutput("Window created...")
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
 				break
-			case 'alias':
+			case 'select':
 				if (args != "") {
-					lastAlias = args
-					displayOutput("Alias setup for defining...")
+					lastSelect = args
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
 				break
 			case 'def':
 				if (args != "") {
-					if (lastAlias) {
-						CommandAliases[lastAlias] = args
-						displayOutput("Alias defined...")
+					if (lastSelect) {
+						CommandAliases[lastSelect] = args
 					} else {
 						displayOutput("Alias not setup for defining yet", false, true)
 					}
@@ -1217,12 +1203,29 @@ async function executeCommand(commandLine) {
 					displayOutput(key + ": " + CommandAliases[key])
 				}
 				break
-			case 'execute': 
+			case 'exec': 
 				if (args != "") {
 					executeCommand(CommandAliases[args])
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
+				break
+			case 'ls':
+				for (var key in TerminalFiles) {
+					displayOutput(key)
+				}
+				break
+			case 'edit':
+				TerminalFiles[lastSelect] = args
+				break
+			case 'view':
+				lastOpen = TerminalFiles[args]
+				break
+			case 'rm':
+				delete TerminalFiles[args]
+				break
+			case 'del':
+				delete CommandAliases[args]
 				break
 			case '':
 				break
@@ -1384,6 +1387,7 @@ window.onbeforeunload = function () {
     if (windowManagerApp) {
 	    windowManagerApp.close()
     }
+	saveTerminalData()
 }
 
 function saveWindowManagerSettings() {
