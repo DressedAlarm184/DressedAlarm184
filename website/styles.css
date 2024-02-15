@@ -4,7 +4,7 @@
 * {
   font-family: "Open Sans";
   color: black;
-  cursor: url("cursor1.cur"), auto;
+  cursor: url("assets/cursor1.cur"), auto;
   user-select: none;
   tab-size: 4;
 }
@@ -195,7 +195,7 @@ textarea {
   background: lightgray;
   color: black;
   font-size: 16px;
-  cursor: url("cursor2.cur"), auto;
+  cursor: url("assets/cursor2.cur"), auto;
   border-radius: 8px;
   font-family: "Source Code Pro";
 }
@@ -206,7 +206,7 @@ input {
 }
 
 select {
-  cursor: url("cursor2.cur"), auto;
+  cursor: url("assets/cursor2.cur"), auto;
 }
 
 .small {
@@ -240,7 +240,7 @@ button {
   zoom: 90%;
   color: black;
   padding: 0.2em;
-  cursor: url("cursor2.cur"), auto;
+  cursor: url("assets/cursor2.cur"), auto;
   border: 3px solid black !important;
   border-radius: 7px;
   transition: filter 0.25s ease;
@@ -307,12 +307,12 @@ body {
 	margin: 10px;
 	overflow-wrap: break-word;
 	margin-inline: auto;
-	cursor: url("cursor2.cur"), auto;
+	cursor: url("assets/cursor2.cur"), auto;
 }
 
 .terminal * {
 	font-family: "Source Code Pro" !important;
-	cursor: url("cursor2.cur"), auto;
+	cursor: url("assets/cursor2.cur"), auto;
 }
 
 .prompt {
@@ -525,7 +525,7 @@ div.command2 {
 
 dialog::backdrop {
   background-color: #000000aa;
-  cursor: url("cursor1.cur"), default;
+  cursor: url("assets/cursor1.cur"), default;
 }
 
 dialog {
@@ -596,7 +596,7 @@ main::-webkit-scrollbar {
 }
 
 input {
-  cursor: url("cursor2.cur"), auto;
+  cursor: url("assets/cursor2.cur"), auto;
 }
 
 @keyframes fadein {
@@ -642,7 +642,7 @@ input {
 }
 
 .helpbutton {
-  cursor: url("cursor2.cur"), default;
+  cursor: url("assets/cursor2.cur"), default;
 }
 
 .top-button-container {
