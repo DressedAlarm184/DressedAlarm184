@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap");
 
-main * {
+main, main * {
   font-family: "Open Sans";
   color: black;
   cursor: url("assets/cursor1.cur"), auto;
@@ -54,6 +54,7 @@ img {
   box-sizing: border-box;
   padding-inline: 15px;
   min-height: 50px;
+  font-family: "Open Sans";
 }
 
 #notif.slide {
@@ -241,7 +242,7 @@ button {
   color: black;
   padding: 0.2em;
   cursor: url("assets/cursor2.cur"), auto;
-  border: 3px solid black !important;
+  border: 3px solid black;
   border-radius: 7px;
   transition: filter 0.25s ease;
 }
@@ -522,6 +523,7 @@ div.command2 {
 	cursor: default;
 	font-size: 14px;
 	display: none;
+	font-family: "Open Sans";
 }
 
 dialog::backdrop {
@@ -564,7 +566,7 @@ button.openbtn {
 
 #closeAlert {
   background-color: #0088ff;
-  border: none !important;
+  border: 0px solid transparent !important;
   border-radius: 8px;
   position: relative;
   left: 220px;
@@ -622,11 +624,6 @@ input {
   }
 }
 
-#texteditor {
-  text-align: center;
-  margin: 5px;
-}
-
 .center {
   display: flex;
   justify-content: center;
@@ -678,6 +675,10 @@ input {
 #btn41 {
   position: relative;
   bottom: 10px;
+}
+
+#backgroundSelector {
+	margin-left: 5px;
 }
 
 .center * {

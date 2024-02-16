@@ -665,16 +665,14 @@ document.getElementById("btn15").onclick = function() { // search modal //
     document.querySelector("#gsearch").showModal()
 }
 
-let notifActive = false // slide in notif
 function notif(msg) {
-    if (!notifActive) {
+    if (!(qs("#notif").classList.contains("slide"))) {
         qs("#notif").innerHTML = msg
         qs("#notif").classList.add("slide")
         notifActive = true
-        setTimeout(()=>{
-            qs("#notif").classList.remove("slide")
-            notifActive = false
-        },6000)
+        qs("#notif").addEventListener('animationend', () => {
+			qs("#notif").classList.remove("slide")
+		}, { once: true });
     }
 }
 
@@ -1035,7 +1033,7 @@ async function executeCommand(commandLine) {
 		switch (command) {
 			case 'help':
 				if (args == "") {
-					displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, time, random, alert, script, read, vars, get, reload, window, select, def, list, exec, ls, edit, view, rm, del');
+					displayOutput('Available Commands: help, clear, echo, date, math, cat, open, eval, time, random, alert, script, read, vars, get, reload, window, select, def, list, exec, ls, edit, view, rm, del, notif');
 				} else {
 					displayOutput(args + ": " + {
 						"clear": "Clears the terminal screen.",
@@ -1063,7 +1061,8 @@ async function executeCommand(commandLine) {
 						"view": "Gets the contents of a file",
 						"edit": "Edits a file or creates a new one",
 						"rm": "delete the specified file",
-						"del": "deletes the provided alias"
+						"del": "deletes the provided alias",
+						"notif": "displays a new notifcation using the provided text"
 					}[args])}
 				break;
 			case 'clear':
@@ -1093,8 +1092,8 @@ async function executeCommand(commandLine) {
 				}
 				break;
 			case 'cat':
-				executeCommand("view " + args)
-				executeCommand("echo $FILE")
+				lastOpen = TerminalFiles[args]
+				executeCommand("echo " + lastOpen)
 				break
 			case 'open':
 				if (args != "") {
@@ -1149,6 +1148,7 @@ async function executeCommand(commandLine) {
 					if (lastRead == "" || lastRead == null) {
 						lastRead = "undefined"
 					}
+					displayOutput("User input saved to $READ...")
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
@@ -1173,6 +1173,7 @@ async function executeCommand(commandLine) {
 					`
 					opened.document.body.style.fontSize = "20px"
 					opened.document.title = "Command Prompt Window"
+					displayOutput("New window created...")
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
@@ -1180,6 +1181,7 @@ async function executeCommand(commandLine) {
 			case 'select':
 				if (args != "") {
 					lastSelect = args
+					displayOutput("Text selected for later use...")
 				} else {
 					displayOutput("Please provide the required argument", false, true)
 				}
@@ -1187,7 +1189,8 @@ async function executeCommand(commandLine) {
 			case 'def':
 				if (args != "") {
 					if (lastSelect) {
-						CommandAliases[lastSelect] = args
+						CommandAliases[lastSelect] = raw
+						displayOutput("Alias defined...")
 					} else {
 						displayOutput("Alias not setup for defining yet", false, true)
 					}
@@ -1208,21 +1211,46 @@ async function executeCommand(commandLine) {
 				}
 				break
 			case 'ls':
+				displayOutput("total " + Object.keys(TerminalFiles).length)
 				for (var key in TerminalFiles) {
 					displayOutput(key)
 				}
 				break
 			case 'edit':
-				TerminalFiles[lastSelect] = args
+				if (lastSelect) {
+					TerminalFiles[lastSelect] = args
+					displayOutput("File content updated...")
+				} else {
+					displayOutput("File not selected",false,true)
+				}
 				break
 			case 'view':
 				lastOpen = TerminalFiles[args]
+				displayOutput("File content saved to $FILE...")
 				break
 			case 'rm':
 				delete TerminalFiles[args]
+				displayOutput("File deleted...")
 				break
 			case 'del':
 				delete CommandAliases[args]
+				displayOutput("Alias deleted...")
+				break
+			case 'notif':
+				Notification.requestPermission().then(function (permission) {
+					if (permission === "granted") {
+						var notification = new Notification("Terminal Notification", {
+							body: args,
+							icon: "favicon.ico"
+						})
+						notification.onclick = function() {
+							this.close()
+						}
+						displayOutput("Notification created...")
+					} else {
+						displayOutput("Invalid permissions",false,true)
+					}
+				})
 				break
 			case '':
 				break
