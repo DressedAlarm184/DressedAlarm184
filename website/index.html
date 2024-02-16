@@ -9,9 +9,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="max-age=1, must-revalidate">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
+	<p id="loading">Loading...</p>
 	<div id="resize">0 &times; 0</div>
 	<noscript>
 		<p class="noscript-message">This website requires javascript to work properly!<br>Please use a newer browser or enable scripting.</p>
@@ -19,8 +20,12 @@
 			*:not(html,body,noscript,br,.noscript-message) {
 				display: none;
 			}
-			noscript {
-				font-size: 24px;
+			noscript > * {
+				font-size: 32px;
+				color: white;
+				text-align: center;
+				user-select: none;
+				font-family: "Source Code Pro";
 			}
 		</style>
 	</noscript>

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap");
 
-* {
+main * {
   font-family: "Open Sans";
   color: black;
   cursor: url("assets/cursor1.cur"), auto;
@@ -436,14 +436,15 @@ body {
 }
 
 main {
-  width: 100%;
-  border-radius: 0px;
-  position: relative;
-  overflow-x: hidden;
-  scrollbar-width: none;
-  background: #0099ff;
-  zoom: 80%;
-  transition: filter 500ms;
+	width: 100%;
+	border-radius: 0px;
+	position: relative;
+	overflow-x: hidden;
+	scrollbar-width: none;
+	background: #0099ff;
+	zoom: 80%;
+	transition: filter 500ms;
+	display: none;
 }
 
 input[type="checkbox"].command2 {
@@ -710,6 +711,14 @@ input[type="checkbox"]:checked {
 /* Customize the scrollbar */
 #element-list::-webkit-scrollbar {
   width: 12px; /* Set the width of the scrollbar */
+}
+
+#loading {
+	color: white;
+	font-size: 64px;
+	user-select: none;
+	font-family: "Source Code Pro";
+	text-align: center;
 }
 
 #element-list::-webkit-scrollbar-thumb {

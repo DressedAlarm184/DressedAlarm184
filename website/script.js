@@ -4,14 +4,21 @@
 window.onerror = function(error) {
     popupBox(error)
 }
+var colorSettings = null;
+interval = null;
+window.onload = function() {
+	qs("main").style.display = "block"
+	qs("#loading").style.display = "none"
+	if (!(localStorage.getItem("app.settings.bgcolor"))) {
+		localStorage.setItem("app.settings.bgcolor","#333333")
+	}
+	colorSettings = localStorage.getItem("app.settings.bgcolor")
+	qs("#backgroundSelector").value = colorSettings
+	document.body.style.backgroundColor = colorSettings
 
-// load css
-document.addEventListener('DOMContentLoaded', function() {
-	var cssLink = document.createElement('link');
-	cssLink.rel = 'stylesheet';
-	cssLink.href = 'styles.css';
-	document.head.appendChild(cssLink);
-});
+	interval = setInterval(loop,50)
+	setInterval(ticktime,1000)
+}
 
 function loadProj(id) { // load project
     document.getElementById("iframe").src = "https://turbowarp.org/" + id + "/embed?hqpen"
@@ -76,14 +83,6 @@ qs("#btn1").onclick = () => { // opens the github repo
 
 var gamepad0 = true
 
-// if no bg color saved, load in the default color
-if (!(localStorage.getItem("app.settings.bgcolor"))) {
-    localStorage.setItem("app.settings.bgcolor","#333333")
-}
-
-// loads the background color from local storage
-var colorSettings = localStorage.getItem("app.settings.bgcolor")
-qs("#backgroundSelector").value = colorSettings
 
 qs("#btn55").onclick = () => {
 	changebackground(qs("#backgroundSelector").value)
@@ -285,7 +284,6 @@ function handlePinCodeButtonClick(event) { // handle pin code button click
 }
 
 qs("#btn40").addEventListener("click", handlePinCodeButtonClick)
-document.body.style.backgroundColor = colorSettings
 
 // gets the current online time from the localstorage (or 0 on first visit) 
 var runtime = parseInt(localStorage.getItem("app.stored.runtime",10)) || 0
@@ -333,8 +331,7 @@ qs("#btn38").onclick = function() {
 //RUNTIME IS COUNTED BELOW
 ///// VVVVVVVVVVVVVVVVVVVVVVVV
 
-var interval = setInterval(loop,50)
-setInterval(ticktime,1000) // ticks up the runtime while page is not hidden
+// ticks up the runtime while page is not hidden
 function ticktime () {
     if (!document.hidden) {
         runtime = runtime + 1
@@ -1236,6 +1233,8 @@ async function executeCommand(commandLine) {
 		displayOutput("There was an error running that command", false, true);
 	}
 }
+
+
 
 {
 	qs("#multicommands-button").onclick = () => {
