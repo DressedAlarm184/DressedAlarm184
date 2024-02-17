@@ -1429,3 +1429,97 @@ function returnWindowMangagerValueString() {
 	let result5 = `Message: ${qs("#windowMessage").value}`
 	return result1+result2+result3+result4+result5
 }
+
+noContextMenu = [qs("#jscode")]
+
+qs("main").addEventListener('contextmenu', function(event) {
+	if (!isDialogOpen() && !(noContextMenu.includes(event.target))) {
+		setTimeout(()=>{
+			event.preventDefault()
+			const mouseX = event.clientX
+			const mouseY = event.clientY
+			qs("#contextMenu").style.left = mouseX + 'px'
+			qs("#contextMenu").style.top = mouseY + 'px'
+			qs("#contextMenu").style.display = 'block'
+		},1)
+	}
+});
+
+document.addEventListener("contextmenu", function() {
+	qs("#contextMenu").style.display = 'none';
+})
+
+document.addEventListener('click', function(event) {
+	qs("#contextMenu").style.display = 'none';
+})
+
+document.querySelectorAll("#contextMenu div").forEach((element) => {
+	element.addEventListener("mousedown",(event) => {
+		event.preventDefault()
+		const focusedElement = document.activeElement;
+        const selectedText = window.getSelection().toString();
+		switch (element.innerText) {
+			case 'Reload App':
+				location.reload()
+				break
+			case 'Copy Selection':
+				let selectedText = window.getSelection().toString();
+				navigator.clipboard.writeText(selectedText)
+				break
+			case 'Paste Text':
+				navigator.clipboard.readText()
+                    .then((text) => {
+                        if (focusedElement.tagName === 'INPUT' || focusedElement.tagName === 'TEXTAREA') {
+                            const cursorPosition = focusedElement.selectionStart;
+                            const newText =
+                                focusedElement.value.substring(0, cursorPosition) +
+                                text +
+                                focusedElement.value.substring(cursorPosition);
+                            focusedElement.value = newText;
+                            focusedElement.selectionStart = cursorPosition + text.length;
+                            focusedElement.selectionEnd = cursorPosition + text.length;
+                            focusedElement.dispatchEvent(new Event('input'));
+                        }
+                    })
+				break
+			case 'Clicker Game':
+				const opened = open("","","width=250,height=110")
+				opened.document.write(`
+					<button>Increment</button>
+					<p>Clicks: 0</p>
+					<script>
+						var count = 0
+						function qs(element) {
+							return document.querySelector(element)
+						}
+						qs("button").onclick = () => {
+							count++
+							qs("p").textContent = "Clicks: " + count
+						}
+					</script>
+					<style>
+						* {
+							font-size: 24px;
+							margin: 5px;
+						}
+					</style>
+				`)
+				opened.document.title = "Clicker Game"
+				break
+			case 'Print Document':
+				setTimeout(()=>{print()},50)
+				break
+		}
+		qs("#contextMenu").style.display = 'none';
+	})
+})
+
+function isDialogOpen() {
+    const dialogs = document.querySelectorAll('dialog');
+    for (let i = 0; i < dialogs.length; i++) {
+        if (dialogs[i].open) {
+            return true;
+        }
+    }
+    return false;
+}
