@@ -39,7 +39,7 @@ window.addEventListener("resize", (e) => {
 	}, 2500)
 })
 
-document.getElementById("jscode").oncontextmenu = function(e) { // runs the js code
+document.getElementById("jscode").onauxclick = function(e) { // runs the js code
     e.preventDefault()
     const jscode = document.getElementById("jscode").value
     if (jscode) {
@@ -564,7 +564,7 @@ document.querySelector("#btn22").onclick = function() { // notifies the user aft
             setTimeout(()=>{
                 var notification = new Notification("REMINDER", {
                   body: msg,
-                  icon: "favicon.ico"
+                  icon: "assets/favicon.ico"
                 })
                 notification.onclick = function() {
                     this.close()
@@ -1237,20 +1237,24 @@ async function executeCommand(commandLine) {
 				displayOutput("Alias deleted...")
 				break
 			case 'notif':
-				Notification.requestPermission().then(function (permission) {
-					if (permission === "granted") {
-						var notification = new Notification("Terminal Notification", {
-							body: args,
-							icon: "favicon.ico"
-						})
-						notification.onclick = function() {
-							this.close()
+				if (args != "") {
+					Notification.requestPermission().then(function (permission) {
+						if (permission === "granted") {
+							var notification = new Notification("Terminal Notification", {
+								body: args,
+								icon: "assets/favicon.ico"
+							})
+							notification.onclick = function() {
+								this.close()
+							}
+							displayOutput("Notification created...")
+						} else {
+							displayOutput("Invalid permissions",false,true)
 						}
-						displayOutput("Notification created...")
-					} else {
-						displayOutput("Invalid permissions",false,true)
-					}
-				})
+					})
+				} else {
+					displayOutput("Please provide the required argument", false, true)
+				}
 				break
 			case '':
 				break
@@ -1430,10 +1434,8 @@ function returnWindowMangagerValueString() {
 	return result1+result2+result3+result4+result5
 }
 
-noContextMenu = [qs("#jscode")]
-
 qs("main").addEventListener('contextmenu', function(event) {
-	if (!isDialogOpen() && !(noContextMenu.includes(event.target))) {
+	if (!isDialogOpen()) {
 		setTimeout(()=>{
 			event.preventDefault()
 			const mouseX = event.clientX
