@@ -1,0 +1,14 @@
+name: Auto Close Issues
+
+on:
+  project_card:
+    types: [moved]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if the project card is in a completed column
+        if: github.event.project_card.column_name == 'Completed'
+        run: |
+          echo "The project card is in a completed column."
