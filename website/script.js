@@ -242,7 +242,7 @@ function getPlatform() { // gets the users operating system.
     }
 }
 
-qs("main").oncontextmenu = function(e) {
+document.body.oncontextmenu = function(e) {
     e.preventDefault()
 }
 
@@ -553,6 +553,71 @@ function rgbToHex(r, g, b) { // coverts rbg to hex
 function componentToHex(c) { // coverts a component to hex
     const hex = c.toString(16).toUpperCase()
     return hex.length === 1 ? '0' + hex : hex
+}
+
+// custom key combos
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === '/') {
+        event.preventDefault()
+		qs("#btn23").click()
+    }
+	if (event.altKey && event.key === 'z') {
+		event.preventDefault()
+		const display = window.getComputedStyle(qs('.window[name="shortcuts"]')).getPropertyValue("display")
+		if (display == "none") {
+			qs('.window[name="shortcuts"]').style.display = "block"
+			qs('.window[name="shortcuts"]').style.top = "10px"
+			qs('.window[name="shortcuts"]').style.left = "10px"
+		} else {
+			popupBox("The key shortcuts window is already open!")
+		}
+    }
+	if (event.altKey && event.key === "0") {
+		event.preventDefault()
+		const windows = document.querySelectorAll(".window")
+		windows.forEach((window) => {
+			window.style.display = "none"
+		})
+		notif("All windows are <br> now closed")
+	}
+	if (event.ctrlKey && event.key === "q") {
+		event.preventDefault()
+		const code = prompt("Enter a JavaScript statement")
+		eval(code)
+	}
+	if (event.ctrlKey && event.key === '.') {
+		event.preventDefault()
+		const display = window.getComputedStyle(qs('.window[name="empty"]')).getPropertyValue("display")
+		if (display == "none") {
+			qs('.window[name="empty"]').style.display = "block"
+			qs('.window[name="empty"]').style.top = "10px"
+			qs('.window[name="empty"]').style.left = "10px"
+		} else {
+			popupBox("The basic empty window is already open!")
+		}
+    }
+});
+
+qs("#btn39").onclick = () => {
+	const display = window.getComputedStyle(qs('.window[name="theme"]')).getPropertyValue("display")
+	if (display == "none") {
+		qs('.window[name="theme"]').style.display = "block"
+		qs('.window[name="theme"]').style.top = "10px"
+		qs('.window[name="theme"]').style.left = "10px"
+	} else {
+		popupBox("The theme changer window is already open!")
+	}
+}
+
+qs("#btn23").onclick = () => {
+	const display = window.getComputedStyle(qs('.window[name="notepad"]')).getPropertyValue("display")
+	if (display == "none") {
+		qs('.window[name="notepad"]').style.display = "block"
+		qs('.window[name="notepad"]').style.top = "10px"
+		qs('.window[name="notepad"]').style.left = "10px"
+	} else {
+		popupBox("The notepad window is already open!")
+	}
 }
 
 document.querySelector("#btn22").onclick = function() { // notifies the user after a certin amount of time
@@ -1432,6 +1497,47 @@ function returnWindowMangagerValueString() {
 	let result4 = `Button: ${qs("#windowButton").value}\n`
 	let result5 = `Message: ${qs("#windowMessage").value}`
 	return result1+result2+result3+result4+result5
+}
+
+{
+	const browserWindow = window
+	const windows = document.querySelectorAll('.window');
+	windows.forEach(window => {
+		const titlebar = window.querySelector('.titlebar');
+		let isDragging = false;
+		let offsetX, offsetY;
+		window.onmousedown = () => {
+			let highestZIndex = 0;
+			document.querySelectorAll("*").forEach(element => {
+				const zIndex = parseInt(browserWindow.getComputedStyle(element).zIndex);
+				if (zIndex > highestZIndex) {
+					highestZIndex = zIndex;
+				}
+			});
+			window.style.zIndex = highestZIndex + 1;
+		}
+		titlebar.addEventListener('mousedown', (event) => {
+			isDragging = true;
+			offsetX = event.clientX - window.getBoundingClientRect().left;
+			offsetY = event.clientY - window.getBoundingClientRect().top;
+		});
+		document.addEventListener('mousemove', (event) => {
+			if (isDragging) {
+				const newX = event.clientX - offsetX;
+				const newY = event.clientY - offsetY;
+				window.style.left = newX + 'px';
+				window.style.top = newY + 'px';
+			}
+		});
+		document.addEventListener('mouseup', () => {
+			isDragging = false;
+		});
+		const close = titlebar.querySelector(".close")
+		close.onmousedown = function() {
+			window.style.display = "none"
+		}
+	});
+
 }
 
 qs("main").addEventListener('contextmenu', function(event) {

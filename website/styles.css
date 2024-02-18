@@ -71,6 +71,84 @@ img {
 	min-width: max-content;
 }
 
+.window {
+	position: absolute;
+	left: 40px;
+	top: 20px;
+	width: 300px;
+	height: 250px;
+	background: black;
+	border: 3px solid black;
+	border-radius: 10px;
+	user-select: none;
+	cursor: url("assets/cursor1.cur"),auto;
+	display: none;
+	.titlebar {
+		height: 15%;
+		background: darkslategray;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+		border-bottom: 3px solid black;
+		box-sizing: border-box;
+		cursor: url("assets/cursor2.cur"),auto;
+		font-family: "Arial Black";
+		.close {
+			font-size: 32px;
+			position: absolute;
+			right: 10px;
+			transform: translateY(-5px);
+			color: white;
+		}
+		.title {
+			font-size: 20px;
+			color: white;
+			display: inline;
+			position: absolute;
+			left: 10px;
+			transform: translateY(4px);
+		}
+	}
+	.content {
+		background: #ddd;
+		height: 85%;
+		overflow: auto;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+		padding-block: 5px;
+		padding-inline: 10px;
+		box-sizing: border-box;
+		font-size: 20px;
+		font-family: "Open Sans";
+	}
+}
+
+.window[name="notepad"] {
+	textarea {
+		margin: 0;
+		margin-top: 15px;
+		width: calc(100% - 40px);
+		height: 100px;
+		font-size: 20px;
+		height: 70%;
+	}
+}
+
+.window[name="shortcuts"] {
+	li {
+		margin-bottom: 10px;
+	}
+}
+
+.window[name="theme"] {
+	button {
+		font-size: 20px;
+	}
+	select {
+		font-size: 20px;
+		margin-bottom: 5px;
+	}
+}
+
 #contextMenu div {
 	margin: 2px 10px;
 	padding: 4px 5px;
@@ -470,6 +548,7 @@ main {
 	zoom: 80%;
 	transition: filter 500ms;
 	display: none;
+	font-size: 16px;
 }
 
 input[type="checkbox"].command2 {

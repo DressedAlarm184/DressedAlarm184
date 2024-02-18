@@ -46,7 +46,7 @@
             <button  id="btn1"  title="Opens the website's github repo in a new tab">GITHUB</button>
     		<button  id="btn36" title="Displays all issues (GitHub) for this website.">ISSUES</button>
     		<button  id="btn3"  title="Toggles the brightness of the application">BRIGHTNESS</button>
-    		<button  id="btn23" title="An unused button">UNUSED</button>
+    		<button  id="btn23" title="Opens the notepad window.">NOTEPAD</button>
     		<button  id="btn39" title="An unused button">UNUSED</button>
 		</div>
 		<hr>
@@ -89,6 +89,7 @@
 		    <li>This app works best in chromium browsers.</li>
 		    <li>Hover over buttons! <span class="helpbutton" title="Hovering over buttons might reveal a hover message that could help you discover what a feature does!">(hover for more info)</span></li>
         	<li>Press [ESC] to close the open dialog box!</li>
+			<li>Press alt+z to view all custom key shortcuts.</li>
         </ol>
 		<hr>
 		<input class="normal" id="popupBox" value="Hello!" style="width:200px;height:18px;">
@@ -654,6 +655,39 @@
 		<div>Java Script</div>
 		<div>Print Document</div>
 		<div>Close Menu</div>
+	</div>
+	<div class="window" name="empty">
+		<div class="titlebar">
+			<div class="title">Basic Window</div>
+			<div class="close">&times;</div>
+		</div>
+		<div class="content"></div>
+	</div>
+	<div class="window" name="notepad">
+		<div class="titlebar">
+			<div class="title">Notepad</div>
+			<div class="close">&times;</div>
+		</div>
+		<div class="content">
+			Simple Notepad
+			<textarea placeholder="Type notes..."></textarea>
+		</div>
+	</div>
+	<div class="window" name="shortcuts">
+		<div class="titlebar">
+			<div class="title">Key Shortcuts</div>
+			<div class="close">&times;</div>
+		</div>
+		<div class="content">
+			Keyboard Shortcuts: <br>
+			<ul>
+				<li>alt+z : Opens the key shortcuts window</li>
+				<li>ctrl+/ : Opens the notepad window</li>
+				<li>alt+0 : Closes all open windows</li>
+				<li>ctrl+q : Executes some javascript code</li>
+				<li>ctrl+. : Opens a basic empty window</li>
+			</ul>
+		</div>
 	</div>
 	<script src="script.js"></script>
 </body>
