@@ -1511,6 +1511,11 @@ document.querySelectorAll("#contextMenu div").forEach((element) => {
 			case 'Print Document':
 				setTimeout(()=>{print()},50)
 				break
+			case "Java Script":
+				setTimeout(() => {
+					const code = prompt("Enter a JavaScript statement")
+					eval(code)
+				},200)
 		}
 		qs("#contextMenu").style.display = 'none';
 	})
