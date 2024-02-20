@@ -39,26 +39,27 @@ window.addEventListener("resize", (e) => {
 	}, 2500)
 })
 
-document.getElementById("jscode").onauxclick = function(e) { // runs the js code
-    e.preventDefault()
-    const jscode = document.getElementById("jscode").value
-    if (jscode) {
-    	try {
-			const customConsole = qs("#console")
-			customConsole.innerHTML = ""
-			const date = new Date()
-			println(`Snippet ran at: ${getCurrentTime()} on ${getCurrentDate()}`,"blue")
-			const start = new Date().getTime()
-			eval(jscode)
-			const end = new Date().getTime()
-			notif("JavaScript snippet<br> ran successfully!")
-			println(`Snippet finished in: ${end-start}ms`,"green")
-        } catch (error) {
-            notif("JavaScript snippet<br>had an error!")
-            println(`${error.name}: ${error.message}`,"red")
-        }
-    } else {
-		notif("You can not run an<br>empty code snippet!")
+document.getElementById("jscode").onmousedown = function(e) { // runs the js code
+	if ((e.button === 1) || (e.button === 0 && e.shiftKey)) {
+		e.preventDefault()
+		const jscode = document.getElementById("jscode").value
+		if (jscode) {
+			try {
+				const customConsole = qs("#console")
+				customConsole.innerHTML = ""
+				println(`Snippet ran at: ${getCurrentTime()} on ${getCurrentDate()}`,"blue")
+				const start = new Date().getTime()
+				eval(jscode)
+				const end = new Date().getTime()
+				notif("JavaScript snippet<br> ran successfully!")
+				println(`Snippet finished in: ${end-start}ms`,"green")
+			} catch (error) {
+				notif("JavaScript snippet<br>had an error!")
+				println(`${error.name}: ${error.message}`,"red")
+			}
+		} else {
+			notif("You can not run an<br>empty code snippet!")
+		}
 	}
 }
 
@@ -597,6 +598,19 @@ document.addEventListener('keydown', function(event) {
 		}
     }
 });
+
+const WindowManager = {
+	instance: qs(".window[name=empty]"),
+	setcaption: function(param) {
+		qs(".titlebar > .title", this.instance).textContent = param
+	},
+	clear: function() {
+		qs(".content", this.instance).innerHTML = ""
+	},
+	println: function(param) {
+		qs(".content", this.instance).innerHTML += escapeHtml(param) + "<br>"
+	}
+}
 
 qs("#btn39").onclick = () => {
 	const display = window.getComputedStyle(qs('.window[name="theme"]')).getPropertyValue("display")
