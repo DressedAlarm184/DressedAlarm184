@@ -40,13 +40,13 @@ jobs:
         run: echo "$COMMAND" | bash -
       
       - name: Stage Changes
-        if: ${{ $COMMIT != 'none' }}
+        if: ${{ "$COMMIT" != 'none' }}
         run: git add .
       
       - name: Commit Changes
-        if: ${{ $COMMIT != 'none' }}
+        if: ${{ "$COMMIT" != 'none' }}
         run: git commit -m "$COMMIT"
       
       - name: Push Changes
-        if: ${{ $COMMIT != 'none' }}
+        if: ${{ "$COMMIT" != 'none' }}
         run: git push origin main
