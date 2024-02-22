@@ -1,12 +1,25 @@
 name: Run User Defined Script
 on:
   workflow_dispatch:
-
-permissions:
-  contents: write
-
+    inputs:
+      language:
+        description: Programming Language
+        type: choice
+        options:
+          - bash
+          - python3
+          - node
+        required: true
+        default: bash
+      userinput:
+        description: Script User Input
+        type: text
+        required: false
+        
 env:
   SCRIPT: ${{ vars.script }}
+  LANG: ${{ inputs.language }}
+  INPUT: ${{ inputs.userinput }}
   
 jobs:
   main:
@@ -17,9 +30,7 @@ jobs:
 
       - name: Setup Config
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-
+    
       - name: Execute Script
         run: |
           echo "$SCRIPT" | tr -d '\r' | bash -
