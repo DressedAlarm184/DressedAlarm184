@@ -11,6 +11,7 @@ on:
 
 env:
   SCRIPT: ${{ vars.script }}
+  COMMAND: ${{ inputs.command }}
 
 jobs:
   main:
@@ -20,4 +21,4 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Execute Command
-        run: ${{ inputs.command }}
+        run: echo "$COMMAND" | tr -d '\r' | bash -
