@@ -12,11 +12,17 @@ on:
         required: true
         default: none
 
+permissions:
+  contents: write
+
+env:
+  SCRIPT: ${{ vars.script }}
+  COMMAND: ${{ inputs.command }}
+  COMMIT: ${{ inputs.commit }}
+
 jobs:
   main:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -25,18 +31,22 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          
+          function runscript {
+            echo "$SCRIPT" | tr -d '\r' | bash -
+          }
       
       - name: Execute Command
-        run: ${{ inputs.command }}
+        run: echo "$COMMAND" | bash -
       
       - name: Stage Changes
-        if: ${{ inputs.commit != 'none' }}
+        if: ${{ $COMMIT != 'none' }}
         run: git add .
       
       - name: Commit Changes
-        if: ${{ inputs.commit != 'none' }}
-        run: git commit -m "${{ inputs.commit }}"
+        if: ${{ $COMMIT != 'none' }}
+        run: git commit -m "$COMMIT"
       
       - name: Push Changes
-        if: ${{ inputs.commit != 'none' }}
+        if: ${{ $COMMIT != 'none' }}
         run: git push origin main
