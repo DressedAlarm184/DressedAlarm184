@@ -26,10 +26,7 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          
-          function runscript {
-            echo "${{ vars.script }}" | tr -d '\r' | bash -
-          }
+          alias runscript='echo "${{ vars.script }}" | tr -d '\r' | bash -'
 
       - name: Execute Command
         run: ${{ inputs.command }}
