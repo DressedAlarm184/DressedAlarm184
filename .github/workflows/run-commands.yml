@@ -7,16 +7,11 @@ on:
       command:
         description: 'Enter Command'
         required: true
-        type: text
         default: echo "$SCRIPT" | tr -d '\r' | bash -
       save:
         description: 'Save Changes'
         required: true
-        type: choice
-        options:
-          - Yes
-          - No
-        default: No
+        type: boolean
 
 env:
   SCRIPT: ${{ vars.script }}
@@ -39,8 +34,8 @@ jobs:
       - name: Execute Command
         run: ${{ inputs.command }}
       
-      - name: Push Changes
-        if: ${{ inputs.save == 'Yes' }}
+      - name: Save Changes
+        if: ${{ inputs.save == true }}
         run: |
           git add .
           git commit -m "Modified repository contents using GitHub Actions"
