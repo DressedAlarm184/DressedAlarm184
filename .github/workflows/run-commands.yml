@@ -15,11 +15,6 @@ on:
 permissions:
   contents: write
 
-env:
-  SCRIPT: ${{ vars.script }}
-  COMMAND: ${{ inputs.command }}
-  COMMIT: ${{ inputs.commit }}
-
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -33,20 +28,20 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           
           function runscript {
-            echo "$SCRIPT" | tr -d '\r' | bash -
+            echo "${{ vars.script }}" | tr -d '\r' | bash -
           }
-      
+
       - name: Execute Command
-        run: echo "$COMMAND" | bash -
+        run: ${{ inputs.command }}
       
       - name: Stage Changes
-        if: ${{ "$COMMIT" != 'none' }}
+        if: ${{ inputs.commit != 'none' }}
         run: git add .
       
       - name: Commit Changes
-        if: ${{ "$COMMIT" != 'none' }}
-        run: git commit -m "$COMMIT"
+        if: ${{ inputs.commit != 'none' }}
+        run: git commit -m "${{ inputs.commit }}"
       
       - name: Push Changes
-        if: ${{ "$COMMIT" != 'none' }}
+        if: ${{ inputs.commit != 'none' }}
         run: git push origin main
