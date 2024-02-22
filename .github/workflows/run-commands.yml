@@ -12,6 +12,9 @@ on:
         required: true
         default: none
 
+env:
+  SCRIPT: ${{ vars.script }}
+
 permissions:
   contents: write
 
