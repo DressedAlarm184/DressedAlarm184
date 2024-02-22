@@ -7,6 +7,7 @@ on:
       command:
         description: 'Enter Command'
         required: true
+        default: echo "${{ vars.SCRIPT }}" | tr -d '\r' | bash -
       commit:
         description: 'Commit Message'
         required: true
@@ -26,7 +27,6 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          alias runscript='echo "${{ vars.script }}" | tr -d '\r' | bash -'
 
       - name: Execute Command
         run: ${{ inputs.command }}
