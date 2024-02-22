@@ -567,8 +567,6 @@ document.addEventListener('keydown', function(event) {
 		const display = window.getComputedStyle(qs('.window[name="shortcuts"]')).getPropertyValue("display")
 		if (display == "none") {
 			qs('.window[name="shortcuts"]').style.display = "block"
-			qs('.window[name="shortcuts"]').style.top = "10px"
-			qs('.window[name="shortcuts"]').style.left = "10px"
 		} else {
 			popupBox("The key shortcuts window is already open!")
 		}
@@ -578,8 +576,12 @@ document.addEventListener('keydown', function(event) {
 		const windows = document.querySelectorAll(".window")
 		windows.forEach((window) => {
 			window.style.display = "none"
+			window.style.left = "10px"
+			window.style.top = "10px"
+			window.style.width = "300px"
+			window.style.height = "250px"
 		})
-		notif("All windows are <br> now closed")
+		notif("All windows are <br> now reset")
 	}
 	if (event.ctrlKey && event.key === "q") {
 		event.preventDefault()
@@ -591,15 +593,13 @@ document.addEventListener('keydown', function(event) {
 		const display = window.getComputedStyle(qs('.window[name="empty"]')).getPropertyValue("display")
 		if (display == "none") {
 			qs('.window[name="empty"]').style.display = "block"
-			qs('.window[name="empty"]').style.top = "10px"
-			qs('.window[name="empty"]').style.left = "10px"
 		} else {
 			popupBox("The basic empty window is already open!")
 		}
     }
 });
 
-const WindowManager = {
+const WindowAPI = {
 	instance: qs(".window[name=empty]"),
 	setcaption: function(param) {
 		qs(".titlebar > .title", this.instance).textContent = param
@@ -607,8 +607,11 @@ const WindowManager = {
 	clear: function() {
 		qs(".content", this.instance).innerHTML = ""
 	},
-	println: function(param) {
+	addraw: function(param) {
 		qs(".content", this.instance).innerHTML += escapeHtml(param) + "<br>"
+	},
+	inject: function(param) {
+		qs(".content", this.instance).innerHTML += param
 	}
 }
 
@@ -616,8 +619,6 @@ qs("#btn39").onclick = () => {
 	const display = window.getComputedStyle(qs('.window[name="theme"]')).getPropertyValue("display")
 	if (display == "none") {
 		qs('.window[name="theme"]').style.display = "block"
-		qs('.window[name="theme"]').style.top = "10px"
-		qs('.window[name="theme"]').style.left = "10px"
 	} else {
 		popupBox("The theme changer window is already open!")
 	}
@@ -627,8 +628,6 @@ qs("#btn23").onclick = () => {
 	const display = window.getComputedStyle(qs('.window[name="notepad"]')).getPropertyValue("display")
 	if (display == "none") {
 		qs('.window[name="notepad"]').style.display = "block"
-		qs('.window[name="notepad"]').style.top = "10px"
-		qs('.window[name="notepad"]').style.left = "10px"
 	} else {
 		popupBox("The notepad window is already open!")
 	}
@@ -1547,8 +1546,15 @@ function returnWindowMangagerValueString() {
 			isDragging = false;
 		});
 		const close = titlebar.querySelector(".close")
+		close.setAttribute("title", "Close")
 		close.onmousedown = function() {
 			window.style.display = "none"
+		}
+		const resize = titlebar.querySelector(".resize")
+		resize.setAttribute("title", "Resize")
+		resize.onmousedown = function() {
+			window.style.width = "300px"
+			window.style.height = "250px"
 		}
 	});
 

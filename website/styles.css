@@ -73,30 +73,36 @@ img {
 
 .window {
 	position: absolute;
-	left: 40px;
-	top: 20px;
 	width: 300px;
 	height: 250px;
+	min-width: 270px;
+	min-height: 175px;
+	max-width: 600px;
+	max-height: 450px;
+	left: 10px;
+	top: 10px;
 	background: black;
 	border: 3px solid black;
 	border-radius: 10px;
 	user-select: none;
 	cursor: url("assets/cursor1.cur"),auto;
 	display: none;
+	resize: both;
+	overflow: scroll;
+	font-family: "Open Sans";
 	.titlebar {
-		height: 15%;
+		height: 37.5px;
 		background: darkslategray;
 		border-top-left-radius: 8px;
 		border-top-right-radius: 8px;
 		border-bottom: 3px solid black;
 		box-sizing: border-box;
 		cursor: url("assets/cursor2.cur"),auto;
-		font-family: "Arial Black";
 		.close {
-			font-size: 32px;
+			font-size: 44px;
 			position: absolute;
 			right: 10px;
-			transform: translateY(-5px);
+			transform: translateY(-13px);
 			color: white;
 		}
 		.title {
@@ -107,10 +113,18 @@ img {
 			left: 10px;
 			transform: translateY(4px);
 		}
+		.resize {
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			filter: invert(1);
+			transform: translateY(6.5px);
+			right: 45px;
+		}
 	}
 	.content {
 		background: #ddd;
-		height: 85%;
+		height: calc(100% - 37.5px);
 		overflow: auto;
 		border-bottom-left-radius: 8px;
 		border-bottom-right-radius: 8px;
@@ -118,18 +132,18 @@ img {
 		padding-inline: 10px;
 		box-sizing: border-box;
 		font-size: 20px;
-		font-family: "Open Sans";
 	}
 }
 
 .window[name="notepad"] {
 	textarea {
-		margin: 0;
+		margin-inline: auto;
 		margin-top: 15px;
-		width: calc(100% - 40px);
+		width: calc(100% - 20px);
 		height: 100px;
 		font-size: 20px;
-		height: 70%;
+		height: calc(100% - 60px);
+		left: 5px;
 	}
 }
 
