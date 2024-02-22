@@ -7,7 +7,6 @@ on:
       command:
         description: 'Enter Command'
         required: true
-        default: echo "${{ vars.script }}" | tr -d '\r' | bash -
       commit:
         description: 'Commit Message'
         required: true
