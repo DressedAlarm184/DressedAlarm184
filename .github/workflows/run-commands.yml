@@ -9,9 +9,9 @@ on:
         required: true
         default: echo "$SCRIPT" | tr -d '\r' | bash -
       save:
-        description: 'Save Changes'
+        description: 'Commit Changes'
         required: true
-        type: boolean
+        type: choice
 
 env:
   SCRIPT: ${{ vars.script }}
@@ -35,7 +35,7 @@ jobs:
         run: ${{ inputs.command }}
       
       - name: Save Changes
-        if: ${{ inputs.save == true }}
+        if: ${{ inputs.save == 'Yes' }}
         run: |
           git add .
           git commit -m "Modified repository contents using GitHub Actions"
