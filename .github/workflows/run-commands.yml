@@ -17,8 +17,5 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-        
-      - name: Execute Command
+      - name: Run main task
         run: echo "$COMMAND" | tr -d '\r' | bash -
