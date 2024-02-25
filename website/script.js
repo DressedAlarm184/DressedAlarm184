@@ -615,15 +615,6 @@ const WindowAPI = {
 	}
 }
 
-qs("#btn39").onclick = () => {
-	const display = window.getComputedStyle(qs('.window[name="theme"]')).getPropertyValue("display")
-	if (display == "none") {
-		qs('.window[name="theme"]').style.display = "block"
-	} else {
-		popupBox("The theme changer window is already open!")
-	}
-}
-
 qs("#btn23").onclick = () => {
 	const display = window.getComputedStyle(qs('.window[name="notepad"]')).getPropertyValue("display")
 	if (display == "none") {
