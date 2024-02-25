@@ -22,17 +22,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Setup GitHub Pages
+      - name: Setup github pages
         uses: actions/configure-pages@v4
         
-      - name: Upload Artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './website/'
           
-      - name: Deploy to GitHub Pages
+      - name: Deploy to github pages
         id: deployment
         uses: actions/deploy-pages@v4
