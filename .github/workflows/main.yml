@@ -17,4 +17,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run main task
-        run: echo $COMMAND | tr -d '\r' | bash -
+        run: $COMMAND
