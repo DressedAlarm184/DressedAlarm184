@@ -7,7 +7,7 @@ on:
       command:
         description: 'Enter Command'
         required: true
-        default: _=${{ vars.script }} ; echo 'unset _ ; $_' | tr -d '\r' | bash - ; unset _
+        default: _='${{ vars.script }}' ; echo 'unset _ ; $_' | tr -d '\r' | bash - ; unset _
 
 jobs:
   main:
