@@ -7,15 +7,11 @@ on:
       command:
         description: 'Enter Command'
         required: true
-        default: echo "$SCRIPT" | tr -d '\r' | bash -
-
-env:
-  SCRIPT: ${{ vars.script }}
-  COMMAND: ${{ inputs.command }}
-
+        default: echo ${{ vars.script }} | tr -d "\r" | bash -
+        
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Run main task
-        run: echo "$COMMAND" | tr -d '\r' | bash -
+      - name: Execute command
+        run: ${{ inputs.command }}
