@@ -15,10 +15,5 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Create files
-        run: |
-          echo $SCRIPT | tr -d '\r' > script.sh
-          echo $USER > user.txt
-
-      - name: Execute command
+      - name: Run main task
         run: ${{ inputs.command }}
