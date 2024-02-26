@@ -7,8 +7,8 @@ on:
       command:
         description: 'Enter Command'
         required: true
-        default: echo ${{ vars.script }} | tr -d "\r" | bash -
-        
+        default: ${{ vars.script }} | tr -d '\r' | bash -
+
 jobs:
   main:
     runs-on: ubuntu-latest
