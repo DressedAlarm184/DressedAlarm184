@@ -13,10 +13,10 @@ env:
   COMMAND: ${{ inputs.command }}
 
 jobs:
-  execute-command:
+  main:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up environment
+      - name: Create files
         run: |
           echo "$SCRIPT" | tr -d '\r' > script.sh
           echo "$USER" > user.txt
