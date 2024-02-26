@@ -17,4 +17,4 @@ jobs:
           echo "${{ github.actor }}" > user.txt
     
       - name: Run command
-        run: echo "${{ inputs.command }}" | bash
+        run: "${{ inputs.command }}"
