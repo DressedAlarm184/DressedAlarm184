@@ -7,13 +7,14 @@ on:
         description: 'Enter Command'
         required: true
 
-env:
-  SCRIPT: ${{ vars.SCRIPT }}
-  USER: ${{ github.actor }}
-
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Run main task
+      - name: Create files
+        run: |
+          echo "${{ vars.script }}" > script.sh
+          echo "${{ github.actor }} " > user.txt
+    
+      - name: Run command
         run: ${{ inputs.command }}
