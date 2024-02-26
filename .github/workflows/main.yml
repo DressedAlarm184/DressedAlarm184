@@ -22,4 +22,4 @@ jobs:
           echo $USER > user.txt
 
       - name: Execute command
-        run: echo '$COMMAND' | bash -
+        run: $COMMAND
