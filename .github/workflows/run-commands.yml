@@ -7,7 +7,7 @@ on:
       command:
         description: 'Enter Command'
         required: true
-        default: cat runscript.sh | tr -d '\r' | tr '\n' ' ; ' bash -
+        default: cat runscript.sh | tr -d '\r' | tr '\n' ' ; ' | bash -
 
 jobs:
   main:
