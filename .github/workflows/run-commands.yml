@@ -12,7 +12,7 @@ env:
   COMMAND: ${{ inputs.command }}
   SCRIPT: ${{ vars.script }}
   DEFAULT: |
-    echo '${{ vars.script }}' | tr -d '\r' > script.sh
+    echo '$SCRIPT' | tr -d '\r' > script.sh
     echo '$GITHUB_ACTOR' > user.txt
     $COMMAND
 
