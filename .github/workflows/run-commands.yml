@@ -7,11 +7,16 @@ on:
       command:
         description: 'Enter Command'
         required: true
-        default: _='${{ vars.script }}' ; echo '$_' | tr -d '\r' | bash - ; unset _
+        default: echo '$DEFAULT' | tr -d '\r' | bash -
 
+env: 
+  DEFAULT: echo '$SCRIPT' | tr -d '\r' | bash -
+  SCRIPT: ${{ vars.script }}
+  COMAMND: ${{ inputs.command }}
+  
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
       - name: Execute command
-        run: ${{ inputs.command }}
+        run: echo '$COMMAND' | tr -d '\r' | bash -
