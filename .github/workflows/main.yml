@@ -10,10 +10,11 @@ on:
 env:
   SCRIPT: ${{ vars.SCRIPT }}
   USER: ${{ github.actor }}
+  COMMAND: ${{ inputs.command }}
 
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
       - name: Run main task
-        run: ${{ inputs.command }}
+        run: echo '$COMMAND' | tr -d '\r' | bash -
