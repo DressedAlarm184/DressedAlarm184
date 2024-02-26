@@ -1,4 +1,4 @@
-name: Execute User Command
+name: Main Linux Enviornment
 
 on:
   workflow_dispatch:
