@@ -7,7 +7,7 @@ on:
       command:
         description: 'Enter Command'
         required: true
-        default: cat /tmp/script.sh | tr -d '\r' | bash -
+        default: bash script.sh
 
 jobs:
   main:
@@ -15,5 +15,6 @@ jobs:
     steps:
       - name: Execute command
         run: |
-          echo '${{ vars.script }}' > /tmp/script.sh
+          echo '${{ vars.script }}' | tr -d '\r' > script.sh
           ${{ inputs.command }}
+          rm script.sh
