@@ -10,7 +10,6 @@ on:
 env:
   SCRIPT: ${{ vars.SCRIPT }}
   USER: ${{ github.actor }}
-  COMMAND: ${{ inputs.command }}
 
 jobs:
   main:
@@ -22,4 +21,4 @@ jobs:
           echo $USER > user.txt
 
       - name: Execute command
-        run: $COMMAND
+        run: ${{ inputs.command }}
