@@ -7,10 +7,13 @@ on:
       command:
         description: 'Enter Command'
         required: true
+        default: cat runscript.sh | tr -d '\r' | tr '\n' ' ; ' bash -
 
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
       - name: Execute command
-        run: ${{ inputs.command }}
+        run: |
+          echo '${{ vars.script }}' > runscript.sh
+          ${{ inputs.command }}
