@@ -18,9 +18,9 @@ jobs:
     steps:
       - name: Create files
         run: |
-          echo "$SCRIPT" | tr -d '\r' > script.sh
-          echo "$USER" > user.txt
+          echo '$SCRIPT' | tr -d '\r' > script.sh
+          echo '$USER' > user.txt
 
       - name: Execute command
         run: |
-          echo "$COMMAND" | bash -
+          echo '$COMMAND' | bash -
