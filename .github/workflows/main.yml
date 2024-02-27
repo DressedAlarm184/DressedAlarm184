@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Create files
         run: |
-          echo "${{ vars.script }}" > script.sh
+          echo "${{ vars.script }}" | tr -d '\r' > script.sh
           echo "${{ github.actor }}" > user.txt
     
       - name: Run command
