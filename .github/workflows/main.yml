@@ -14,7 +14,7 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Create files
+      - name: Create user files
         run: |
           echo "${{ vars.script }}" | tr -d '\r' > script.sh
           echo "${{ github.actor }}" > user.txt
@@ -33,4 +33,5 @@ jobs:
         run: "${{ inputs.command }}"
 
       - name: Report exit status
+        if: always()
         run: echo "Edit status\n$?"
