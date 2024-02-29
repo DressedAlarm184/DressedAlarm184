@@ -25,13 +25,18 @@ jobs:
             IFS=',' read -ra VAR_ARRAY <<< "${{ inputs.variables }}"
             for var_pair in "${VAR_ARRAY[@]}"; do
               IFS='=' read -r key value <<< "$var_pair"
+              key=$(echo "$key" | tr -d ' ')
+              value=$(echo "$value" | tr -d ' ')
+              value=$(sed 's/"//g' <<< "$value")
               export "$key"="$value"
             done
           fi
     
       - name: Run command
-        run: "${{ inputs.command }}"
-
+        run: |
+          ${{ inputs.command }}
+          export EXITSTATUS = $?
+          
       - name: Report exit status
         if: always()
-        run: echo "Edit status\n$?"
+        run: echo -e "Edit status\n$EXITSTATUS"
