@@ -15,7 +15,7 @@ jobs:
       - name: Create user files
         id: createfiles
         run: |
-          echo "${{ vars.script }}" | tr '$' '\\$' | tr -d '\r' > script.sh
+          echo "${{ vars.script }}" | tr '\$' '\\$' | tr -d '\r' > script.sh
           echo "${{ github.actor }}" > user.txt
     
       - name: Run command
