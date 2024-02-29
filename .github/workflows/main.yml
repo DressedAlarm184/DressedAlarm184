@@ -7,7 +7,9 @@ on:
       command:
         description: "Enter Command"
         required: true
-
+      variables:
+        description: "Custom Variables"
+        required: false
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -16,6 +18,19 @@ jobs:
         run: |
           echo "${{ vars.script }}" | tr -d '\r' > script.sh
           echo "${{ github.actor }}" > user.txt
+
+      - name: Set variables
+        run: |
+          if [ -n "${{ inputs.variables }}" ]; then
+            IFS=',' read -ra VAR_ARRAY <<< "${{ inputs.variables }}"
+            for var_pair in "${VAR_ARRAY[@]}"; do
+              IFS='=' read -r key value <<< "$var_pair"
+              export "$key"="$value"
+            done
+          fi
     
       - name: Run command
         run: "${{ inputs.command }}"
+
+      - name: Report exit status
+        run: echo "Edit status\n$?"
