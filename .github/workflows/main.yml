@@ -26,4 +26,4 @@ jobs:
       - name: Report exit status
         id: reportstatus
         if: always()
-        run: echo -e "Exit status\n${{ steps.command.outcome }}"
+        run: echo -e "Exit status\n${{ steps.runcommand.outcome }}"
