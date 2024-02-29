@@ -31,12 +31,13 @@ jobs:
               export "$key"="$value"
             done
           fi
+          export EXITSTATUS="Workflow failed" 
     
       - name: Run command
         run: |
           ${{ inputs.command }}
-          export EXITSTATUS = $?
+          export EXITSTATUS=$?
           
       - name: Report exit status
         if: always()
-        run: echo -e "Edit status\n$EXITSTATUS"
+        run: echo -e "Exit status\n$EXITSTATUS"
