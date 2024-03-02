@@ -14,8 +14,6 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
-    env:
-      RUNTIME: 0
     steps:
       - name: Create user files
         id: createfiles
@@ -23,7 +21,7 @@ jobs:
           echo '${{ vars.script }}' | tr -d '\r' > script.sh
           echo '${{ github.actor }}' > user.txt
     
-      - name: Run command
+      - name: Run the command
         id: runcommand
         run: |
           IFS=',' read -ra pairs <<< "${{ inputs.variables }}"
@@ -31,19 +29,15 @@ jobs:
               IFS='=' read -r key value <<< "$pair"
               export "$key"="$value"
           done
-          RUNTIME=$(($(date +%s%N) / 1000000))
           ${{ inputs.command }}
 
-      - name: Display execution time
-        id: executetime
-        run: echo "The command finished in $(( $(($(date +%s%N) / 1000000)) - $RUNTIME)) milliseconds"
-
-      - name: Clean up env
-        id: cleanup
+      - name: Finalize enviornment
+        id: cleanupfinalize
         run: |
-          unset RUNTIME
-          echo "Finished..."
-          
+          RANDOMINT=$(shuf -i 0-2147483647 -n 1)
+          echo "Thank you for using the environment!"
+          echo "Here is a random number for you: $RANDOMINT"
+      
       - name: Report exit status
         id: reportstatus
         if: always()
