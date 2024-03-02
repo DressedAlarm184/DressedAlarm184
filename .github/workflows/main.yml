@@ -31,7 +31,7 @@ jobs:
           done
           ${{ inputs.command }}
 
-      - name: Finalize enviornment
+      - name: Finalize env
         id: cleanupfinalize
         run: |
           RANDOMINT=$(shuf -i 0-2147483647 -n 1)
