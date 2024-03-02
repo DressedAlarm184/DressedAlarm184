@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       command:
-        description: "Executable Command"
+        description: "Execute Command"
         required: true
       variables:
         description: "Custom Variables"
@@ -17,29 +17,21 @@ jobs:
     steps:
       - name: Create user files
         id: createfiles
-        shell: source {0}
         run: |
           echo '${{ vars.script }}' | tr -d '\r' > script.sh
           echo '${{ github.actor }}' > user.txt
-
-      - name: Create variables
-        id: createvars
-        shell: source {0}
+    
+      - name: Run command
+        id: runcommand
         run: |
           IFS=',' read -ra pairs <<< "${{ inputs.variables }}"
           for pair in "${pairs[@]}"; do
               IFS='=' read -r key value <<< "$pair"
               export "$key"="$value"
           done
-    
-      - name: Run command
-        id: runcommand
-        shell: source {0}
-        run: |
           ${{ inputs.command }}
           
       - name: Report exit status
         id: reportstatus
-        shell: source {0}
         if: always()
         run: echo -e "Exit status is ${{ steps.runcommand.outcome }}"
