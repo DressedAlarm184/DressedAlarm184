@@ -600,7 +600,7 @@ div.command2 {
   main {
     width: 560px;
     border: 4px solid black;
-    border-radius: 20px;
+    border-radius: 25px;
     height: 95%;
     max-height: 450px;
     zoom: 120%;
