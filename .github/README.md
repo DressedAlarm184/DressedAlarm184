@@ -1,7 +1,4 @@
 Hello, I'm **@DressedAlarm184**.  
-I like playing video games and coding.  
-[DressedAlarm184's Website](https://dressedalarm184.github.io/DressedAlarm184)  
-I also have some gists too.  
-**My Gists:** [DressedAlarm184's Gists](https://gist.github.com/DressedAlarm184)  
-You can find my other repos below.  
-[DressedAlarm184's Repositories](https://github.com/DressedAlarm184?tab=repositories)
+I like to do computer programming. I'm currently doing OS development and Arduino related projects. I'm also collecting AI system prompt and CoT leaks in my [SystemPromptLeaks](https://github.com/DressedAlarm184/SystemPromptLeaks) repository.
+
+My favorite programming languages are: JavaScript, C, & x86 Assembly
